@@ -22,4 +22,7 @@ public class Survey {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 }
