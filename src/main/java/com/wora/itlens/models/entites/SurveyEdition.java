@@ -1,7 +1,6 @@
 package com.wora.itlens.models.entites;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -9,32 +8,35 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Survey {
+public class SurveyEdition {
     @Id
     @Positive
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
-    @Column(name = "title")
-    private String title;
+    @NotNull
+    @Column(name = "creation_date", nullable = false)
+    private LocalDate creationDate;
 
-    @NotBlank
-    @Column(name = "description")
-    private String description;
+    @NotNull
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
+
+    @NotNull
+    @Positive
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @Column(name = "survey_id", nullable = false)
+    private Survey survey;
 
-    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<SurveyEdition> surveyEditions;
 }
