@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,5 +39,8 @@ public class SurveyEdition {
     @ManyToOne
     @Column(name = "survey_id", nullable = false)
     private Survey survey;
+
+    @OneToMany(mappedBy = "surveyEdition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Subject> subjects;
 
 }
