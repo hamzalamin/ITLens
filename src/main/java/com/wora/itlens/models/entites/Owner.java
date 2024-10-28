@@ -1,5 +1,6 @@
 package com.wora.itlens.models.entites;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,15 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Survey {
+public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "description")
-    private String description;
-
+    @Column(name = "name")
+    private String name;
 }
