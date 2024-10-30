@@ -24,12 +24,13 @@ public class OwnerService implements IOwnerService {
     }
 
     @Override
-    public OwnerDto findById(Long aLong) {
-        return null;
+    public OwnerDto findById(Long id) {
+        Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Id Not found"));
+        return ownerMapper.toDto(owner);
     }
 
     @Override
-    public UpdateOwnerDto update(UpdateOwnerDto updateOwnerDto, Long aLong) {
+    public UpdateOwnerDto update(UpdateOwnerDto updateOwnerDto, Long id) {
         return null;
     }
 
@@ -39,7 +40,7 @@ public class OwnerService implements IOwnerService {
     }
 
     @Override
-    public Void delete(Long aLong) {
+    public Void delete(Long id) {
         return null;
     }
 }
