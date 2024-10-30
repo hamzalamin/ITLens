@@ -2,7 +2,9 @@ package com.wora.itlens.controllers;
 
 import com.wora.itlens.models.dtos.owners.CreateOwnerDto;
 import com.wora.itlens.models.dtos.owners.OwnerDto;
+import com.wora.itlens.models.dtos.owners.UpdateOwnerDto;
 import com.wora.itlens.services.impl.OwnerService;
+import jakarta.servlet.ServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,5 +37,11 @@ public class OwnerController {
         return new ResponseEntity<>(owner, HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<OwnerDto> updateOwner(
+            @PathVariable("id")
+            @RequestBody @Valid Long id, UpdateOwnerDto updateOwnerDto){
+        return new ResponseEntity<>(ownerService.update(updateOwnerDto, id), HttpStatus.OK);
+    }
 
 }
