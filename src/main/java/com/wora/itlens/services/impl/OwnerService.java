@@ -1,5 +1,6 @@
 package com.wora.itlens.services.impl;
 
+import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.mappers.OwnerMapper;
 import com.wora.itlens.models.dtos.owners.CreateOwnerDto;
 import com.wora.itlens.models.dtos.owners.OwnerDto;
@@ -25,13 +26,19 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public OwnerDto findById(Long id) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Id Not found"));
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Owner", id));
         return ownerMapper.toDto(owner);
     }
 
     @Override
-    public UpdateOwnerDto update(UpdateOwnerDto updateOwnerDto, Long id) {
-        return null;
+    public OwnerDto update(UpdateOwnerDto updateOwnerDto, Long id) {
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Owner", id));
+
+        owner.setName(updateOwnerDto.name());
+        Owner updatedOwner = ownerRepository.save(owner);
+        return ownerMapper.toDto(updatedOwner);
     }
 
     @Override
