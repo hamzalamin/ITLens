@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,4 +36,9 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 
+    @ManyToOne
+    private Subject subject;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answers;
 }
