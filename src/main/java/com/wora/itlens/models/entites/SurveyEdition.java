@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table(name = "suerveys_editions")
 public class SurveyEdition {
     @Id
     @Positive
@@ -40,7 +41,7 @@ public class SurveyEdition {
     @Column(name = "survey_id", nullable = false)
     private Survey survey;
 
-    @OneToMany(mappedBy = "surveyEdition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "surveyEdition", cascade = CascadeType.ALL)
     private List<Subject> subjects;
 
 }

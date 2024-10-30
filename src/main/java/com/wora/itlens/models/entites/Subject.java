@@ -14,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "subjects")
 public class Subject {
     @Id
     @Positive
@@ -27,4 +28,7 @@ public class Subject {
     @ManyToOne
     @NotNull
     private SurveyEdition surveyEdition;
+
+    @ManyToOne
+    private Subject subject;
 }
