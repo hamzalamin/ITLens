@@ -4,7 +4,6 @@ import com.wora.itlens.models.dtos.owners.CreateOwnerDto;
 import com.wora.itlens.models.dtos.owners.OwnerDto;
 import com.wora.itlens.models.dtos.owners.UpdateOwnerDto;
 import com.wora.itlens.services.impl.OwnerService;
-import jakarta.servlet.ServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/owners")

@@ -8,7 +8,6 @@ public class ItLensApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ItLensApplication.class, args);
-		System.out.println();
 	}
 
 }
