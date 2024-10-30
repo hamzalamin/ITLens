@@ -52,7 +52,9 @@ public class OwnerService implements IOwnerService {
     }
 
     @Override
-    public Void delete(Long id) {
-        return null;
+    public void delete(Long id) {
+        Owner owner = ownerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Owner", id));
+        ownerRepository.delete(owner);
     }
 }

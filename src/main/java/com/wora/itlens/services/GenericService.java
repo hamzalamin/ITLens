@@ -7,5 +7,5 @@ public interface GenericService<CREATE_DTO, UPDATE_DTO, DTO, ID>{
     DTO findById(ID id);
     DTO update(UPDATE_DTO dto, ID id);
     List<DTO> findAll();
-    Void delete(ID id);
+    void delete(ID id);
 }
