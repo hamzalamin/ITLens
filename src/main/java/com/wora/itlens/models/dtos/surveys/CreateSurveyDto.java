@@ -1,4 +1,9 @@
 package com.wora.itlens.models.dtos.surveys;
 
-public record CreateSurveyDto() {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateSurveyDto(
+        @NotBlank String title,
+        @NotBlank String description
+) {
 }
