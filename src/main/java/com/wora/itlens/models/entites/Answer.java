@@ -30,6 +30,7 @@ public class Answer {
     private Integer selectionCount;
 
     @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
 
 

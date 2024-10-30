@@ -37,6 +37,7 @@ public class Question {
     private QuestionType questionType;
 
     @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)

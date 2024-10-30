@@ -28,10 +28,12 @@ public class Subject {
     private String title;
 
     @ManyToOne
+    @JoinColumn(name = "survey_edition_id")
     @NotNull
     private SurveyEdition surveyEdition;
 
     @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
