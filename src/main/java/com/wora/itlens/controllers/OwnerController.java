@@ -29,5 +29,11 @@ public class OwnerController {
         return new ResponseEntity<>(ownerDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<OwnerDto> findById(@PathVariable("id") Long id){
+        OwnerDto owner = ownerService.findById(id);
+        return new ResponseEntity<>(owner, HttpStatus.OK);
+    }
+
 
 }
