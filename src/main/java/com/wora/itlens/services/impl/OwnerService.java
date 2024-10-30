@@ -11,6 +11,9 @@ import com.wora.itlens.services.interfaces.IOwnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class OwnerService implements IOwnerService {
@@ -42,8 +45,10 @@ public class OwnerService implements IOwnerService {
     }
 
     @Override
-    public OwnerDto findAll() {
-        return null;
+    public List<OwnerDto> findAll() {
+        return ownerRepository.findAll().stream()
+                .map(ownerMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
