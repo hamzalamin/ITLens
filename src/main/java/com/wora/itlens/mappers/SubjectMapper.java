@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface SubjectMapper extends GenericMapper<Subject, SubjectDto> {
     Subject toEntity(CreateSubjectDto dto);
-//    Subject toEntity(UpdateSubjectDto dto);
+    Subject toEntity(UpdateSubjectDto dto);
     Subject toEntity(SubjectDto dto);
     SubjectDto toDto(Subject subject);
 }

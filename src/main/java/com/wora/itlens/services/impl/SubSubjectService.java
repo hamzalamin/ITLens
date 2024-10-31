@@ -33,16 +33,20 @@ public class SubSubjectService implements ISubSubjectService {
 
     @Override
     public SubjectDto save(CreateSubjectDto createSubjectDto) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Generic save operation is not supported. Use savedSubSubject instead.");
     }
 
     @Override
-    public SubjectDto findById(Long aLong) {
-        return null;
+    public SubjectDto findById(Long id) {
+        Subject parentSubject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
+        return subjectMapper.toDto(parentSubject);
     }
 
     @Override
-    public SubjectDto update(UpdateSubjectDto updateSubjectDto, Long aLong) {
+    public SubjectDto update(UpdateSubjectDto updateSubjectDto, Long id) {
+        Subject parentSubject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
         return null;
     }
 
@@ -52,7 +56,7 @@ public class SubSubjectService implements ISubSubjectService {
     }
 
     @Override
-    public void delete(Long aLong) {
+    public void delete(Long id) {
 
     }
 }

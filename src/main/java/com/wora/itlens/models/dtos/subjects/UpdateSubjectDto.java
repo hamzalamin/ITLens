@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 
 public record UpdateSubjectDto(
         @NotBlank String title,
-        @NotNull @Positive Long surveyEdition,
-        @NotNull @Positive Long subject
+        @NotNull @Positive Long surveyEditionId,
+        @NotNull @Positive Long subjectId
 ) {
 }

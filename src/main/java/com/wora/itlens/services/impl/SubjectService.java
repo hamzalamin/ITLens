@@ -40,12 +40,15 @@ public class SubjectService implements ISubjectService {
 
     @Override
     public SubjectDto save(CreateSubjectDto createSubjectDto) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Generic save operation is not supported. Use saveSubject instead.");
     }
+
 
     @Override
     public SubjectDto findById(Long id) {
-        return null;
+        Subject subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
+        return subjectMapper.toDto(subject);
     }
 
     @Override
