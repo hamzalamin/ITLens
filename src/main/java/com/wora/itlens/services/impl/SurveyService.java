@@ -54,5 +54,11 @@ public class SurveyService implements ISurveyService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(Long id) {
+        Survey survey = surveyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey", id));
 
+        surveyRepository.delete(survey);
+    }
 }
