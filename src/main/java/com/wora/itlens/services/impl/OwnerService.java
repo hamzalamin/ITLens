@@ -48,7 +48,7 @@ public class OwnerService implements IOwnerService {
     public List<OwnerDto> findAll() {
         return ownerRepository.findAll().stream()
                 .map(ownerMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

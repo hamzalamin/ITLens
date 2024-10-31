@@ -63,7 +63,7 @@ public class SurveyService implements ISurveyService {
     public List<SurveyDto> findAll() {
         return surveyRepository.findAll().stream()
                 .map(surveyMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +67,10 @@ public class SurveyEditionService implements ISurveyEditionService {
 
     @Override
     public List<SurveyEditionDto> findAll() {
-        return List.of();
+        List<SurveyEditionDto> surveyDtoList = surveyEditionRepository.findAll().stream()
+                .map(surveyEditionMapper::toDto)
+                .toList();
+        return surveyDtoList;
     }
 
     @Override
