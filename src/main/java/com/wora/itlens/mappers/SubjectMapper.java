@@ -9,8 +9,8 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface SubjectMapper extends GenericMapper<Subject, SubjectDto> {
-    Subject toEntity(CreateSubjectDto createSubjectDto);
-    Subject toEntity(SubjectDto subjectDto);
-//    Subject toEntity(UpdateSubjectDto updateSubjectDto);
+    Subject toEntity(CreateSubjectDto dto);
+//    Subject toEntity(UpdateSubjectDto dto);
+    Subject toEntity(SubjectDto dto);
     SubjectDto toDto(Subject subject);
 }

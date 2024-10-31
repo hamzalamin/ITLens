@@ -2,7 +2,7 @@ package com.wora.itlens.controllers;
 
 import com.wora.itlens.models.dtos.subjects.CreateSubjectDto;
 import com.wora.itlens.models.dtos.subjects.SubjectDto;
-import com.wora.itlens.services.impl.SubjectService;
+import com.wora.itlens.services.interfaces.ISubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SubjectController {
 
-    private final SubjectService subjectService;
+    private final ISubjectService subjectService;
 
     @PostMapping("/surveys/{surveyEditionId}/subjects")
     public ResponseEntity<SubjectDto> createSubject(
