@@ -75,6 +75,8 @@ public class SurveyEditionService implements ISurveyEditionService {
 
     @Override
     public void delete(Long id) {
-
+        SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+        surveyEditionRepository.delete(surveyEdition);
     }
 }
