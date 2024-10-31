@@ -47,16 +47,21 @@ public class SubSubjectService implements ISubSubjectService {
     public SubjectDto update(UpdateSubjectDto updateSubjectDto, Long id) {
         Subject parentSubject = subjectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Subject", id));
-        return null;
+        parentSubject.setTitle(updateSubjectDto.title());
+        return subjectMapper.toDto(parentSubject);
     }
 
     @Override
     public List<SubjectDto> findAll() {
-        return List.of();
+        return subjectRepository.findAll().stream()
+                .map(subjectMapper::toDto)
+                .toList();
     }
 
     @Override
     public void delete(Long id) {
-
+        Subject parentSubject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
+        subjectRepository.delete(parentSubject);
     }
 }
