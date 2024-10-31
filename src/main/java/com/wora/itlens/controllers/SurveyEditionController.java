@@ -2,6 +2,7 @@ package com.wora.itlens.controllers;
 
 import com.wora.itlens.models.dtos.surveyEditions.CreateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionDto;
+import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,13 @@ public class SurveyEditionController {
     @GetMapping("/{id}")
     public ResponseEntity<SurveyEditionDto> findById(@PathVariable Long id){
         return new ResponseEntity<>(surveyEditionService.findById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SurveyEditionDto> updateSurveyEdition(
+            @PathVariable Long id,
+            @RequestBody UpdateSurveyEditionDto updateSurveyEditionDto
+    ){
+        return new ResponseEntity<>(surveyEditionService.update(updateSurveyEditionDto, id), HttpStatus.OK);
     }
 }
