@@ -3,7 +3,7 @@ package com.wora.itlens.controllers;
 import com.wora.itlens.models.dtos.surveys.CreateSurveyDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
 import com.wora.itlens.models.dtos.surveys.UpdateSurveyDto;
-import com.wora.itlens.services.impl.SurveyService;
+import com.wora.itlens.services.interfaces.ISurveyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SurveyController {
 
-    private final SurveyService surveyService;
+    private final ISurveyService surveyService;
 
     @PostMapping
     public ResponseEntity<SurveyDto> createSurvey(@RequestBody @Valid CreateSurveyDto createSurveyDto){

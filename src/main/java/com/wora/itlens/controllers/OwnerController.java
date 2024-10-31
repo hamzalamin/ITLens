@@ -3,7 +3,7 @@ package com.wora.itlens.controllers;
 import com.wora.itlens.models.dtos.owners.CreateOwnerDto;
 import com.wora.itlens.models.dtos.owners.OwnerDto;
 import com.wora.itlens.models.dtos.owners.UpdateOwnerDto;
-import com.wora.itlens.services.impl.OwnerService;
+import com.wora.itlens.services.interfaces.IOwnerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OwnerController {
 
-    private final OwnerService ownerService;
+    private final IOwnerService ownerService;
 
     @PostMapping
     public ResponseEntity<OwnerDto> createOwner(@RequestBody @Valid CreateOwnerDto createOwnerDto){
