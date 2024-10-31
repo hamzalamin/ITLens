@@ -70,6 +70,8 @@ public class SubjectService implements ISubjectService {
 
     @Override
     public void delete(Long id) {
-
+        Subject subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
+        subjectRepository.delete(subject);
     }
 }
