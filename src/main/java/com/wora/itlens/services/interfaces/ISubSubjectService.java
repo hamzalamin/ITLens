@@ -7,5 +7,4 @@ import com.wora.itlens.services.GenericService;
 
 public interface ISubSubjectService extends GenericService<CreateSubjectDto, UpdateSubjectDto, SubjectDto, Long>{
     SubjectDto savedSubSubject(Long subjectId, CreateSubjectDto createSubjectDto);
-
 }

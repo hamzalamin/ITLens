@@ -37,6 +37,9 @@ public class Subject {
     private Subject subject;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    private List<Subject> subSubjects;
+
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     @NotNull
     private List<Question> questions;
 }
