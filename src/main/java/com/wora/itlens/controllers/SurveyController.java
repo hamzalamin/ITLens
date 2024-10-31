@@ -43,5 +43,9 @@ public class SurveyController {
         return new ResponseEntity<>(surveyService.update(updateSurveyDto ,id), HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSurvey(@PathVariable Long id){
+        surveyService.delete(id);
+        return new  ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
