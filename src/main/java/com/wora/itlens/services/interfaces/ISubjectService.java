@@ -6,4 +6,5 @@ import com.wora.itlens.models.dtos.subjects.UpdateSubjectDto;
 import com.wora.itlens.services.GenericService;
 
 public interface ISubjectService extends GenericService<CreateSubjectDto, UpdateSubjectDto, SubjectDto, Long> {
+    SubjectDto saveSubject(Long surveyEditionId, CreateSubjectDto createSubjectDto);
 }

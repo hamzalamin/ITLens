@@ -13,5 +13,6 @@ import org.mapstruct.Mapper;
 public interface SurveyEditionMapper extends GenericMapper<SurveyEditionDto, SurveyEdition> {
     SurveyEdition toEntity(CreateSurveyEditionDto createSurveyEditionDto);
     SurveyEdition toEntity(UpdateSurveyEditionDto updateSurveyEditionDto);
+    SurveyEdition toEntity(SurveyEditionDto surveyEditionDto);
     SurveyEditionDto toDto(SurveyEdition surveyEdition);
 }
