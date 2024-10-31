@@ -53,7 +53,12 @@ public class SubjectService implements ISubjectService {
 
     @Override
     public SubjectDto update(UpdateSubjectDto updateSubjectDto, Long id) {
-        return null;
+        Subject subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
+
+        subject.setTitle(updateSubjectDto.title());
+        Subject updatedSubject = subjectRepository.save(subject);
+        return subjectMapper.toDto(updatedSubject);
     }
 
     @Override
