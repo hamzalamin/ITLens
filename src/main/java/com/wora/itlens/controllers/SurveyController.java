@@ -30,4 +30,8 @@ public class SurveyController {
         return new ResponseEntity<>(surveyDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<SurveyDto> findById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(surveyService.findById(id), HttpStatus.OK);
+    }
 }
