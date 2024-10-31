@@ -1,8 +1,8 @@
 package com.wora.itlens.controllers;
 
-import com.wora.itlens.mappers.SurveyMapper;
 import com.wora.itlens.models.dtos.surveys.CreateSurveyDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
+import com.wora.itlens.models.dtos.surveys.UpdateSurveyDto;
 import com.wora.itlens.services.impl.SurveyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,4 +34,14 @@ public class SurveyController {
     public ResponseEntity<SurveyDto> findById(@PathVariable("id") Long id){
         return new ResponseEntity<>(surveyService.findById(id), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SurveyDto> updateSurvey(
+            @PathVariable("id")
+            @RequestBody Long id, UpdateSurveyDto updateSurveyDto
+    ){
+        return new ResponseEntity<>(surveyService.update(updateSurveyDto ,id), HttpStatus.OK);
+    }
+
+
 }
