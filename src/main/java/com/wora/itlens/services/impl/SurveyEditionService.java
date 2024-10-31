@@ -47,7 +47,20 @@ public class SurveyEditionService implements ISurveyEditionService {
 
     @Override
     public SurveyEditionDto update(UpdateSurveyEditionDto updateSurveyEditionDto, Long id) {
-        return null;
+        SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+        Long surveyId = updateSurveyEditionDto.surveyId();
+        SurveyDto survey = surveyService.findById(surveyId);
+        if (survey == null) {
+            throw new EntityNotFoundException("Survey", surveyId);
+        }
+
+        surveyEdition.setCreationDate(updateSurveyEditionDto.creationDate());
+        surveyEdition.setStartDate(updateSurveyEditionDto.startDate());
+        surveyEdition.setDate(updateSurveyEditionDto.date());
+        surveyEdition.setSurvey(surveyMapper.toEntity(survey));
+        SurveyEdition updatedSurveyEd = surveyEditionRepository.save(surveyEdition);
+        return surveyEditionMapper.toDto(updatedSurveyEd);
     }
 
     @Override
