@@ -41,4 +41,10 @@ public class SurveyEditionController {
     ){
         return new ResponseEntity<>(surveyEditionService.update(updateSurveyEditionDto, id), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSurveyEdition(@PathVariable Long id){
+        surveyEditionService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
