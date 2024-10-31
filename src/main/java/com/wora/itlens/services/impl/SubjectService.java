@@ -63,7 +63,9 @@ public class SubjectService implements ISubjectService {
 
     @Override
     public List<SubjectDto> findAll() {
-        return List.of();
+        return subjectRepository.findAll().stream()
+                .map(subjectMapper::toDto)
+                .toList();
     }
 
     @Override
