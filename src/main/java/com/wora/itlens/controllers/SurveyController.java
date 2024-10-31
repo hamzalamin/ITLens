@@ -37,11 +37,11 @@ public class SurveyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SurveyDto> updateSurvey(
-            @PathVariable("id")
-            @RequestBody Long id, UpdateSurveyDto updateSurveyDto
-    ){
-        return new ResponseEntity<>(surveyService.update(updateSurveyDto ,id), HttpStatus.OK);
+            @PathVariable("id") Long id,
+            @RequestBody @Valid UpdateSurveyDto updateSurveyDto) {
+        return new ResponseEntity<>(surveyService.update(updateSurveyDto, id), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSurvey(@PathVariable Long id){

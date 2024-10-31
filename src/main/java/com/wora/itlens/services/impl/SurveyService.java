@@ -49,8 +49,12 @@ public class SurveyService implements ISurveyService {
         Survey survey = surveyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Survey", id));
 
+        Owner owner = ownerRepository.findById(updateSurveyDto.ownerId())
+                .orElseThrow(() -> new EntityNotFoundException("Owner", updateSurveyDto.ownerId()));
+
         survey.setTitle(updateSurveyDto.title());
         survey.setDescription(updateSurveyDto.description());
+        survey.setOwner(owner);
         Survey updatedSurvey = surveyRepository.save(survey);
         return surveyMapper.toDto(updatedSurvey);
     }
