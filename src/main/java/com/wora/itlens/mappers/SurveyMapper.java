@@ -11,5 +11,6 @@ import org.mapstruct.Mapper;
 public interface SurveyMapper extends GenericMapper<Survey, SurveyDto> {
     Survey toEntity(CreateSurveyDto createSurveyDto);
     Survey toEntity(UpdateSurveyDto updateSurveyDto);
+    Survey toEntity(SurveyDto surveyDto);
     SurveyDto toDto(Survey survey);
 }
