@@ -7,10 +7,8 @@ import com.wora.itlens.models.dtos.surveyEditions.CreateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
-import com.wora.itlens.models.entites.Survey;
 import com.wora.itlens.models.entites.SurveyEdition;
 import com.wora.itlens.repositories.SurveyEditionRepository;
-import com.wora.itlens.repositories.SurveyRepository;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
 import com.wora.itlens.services.interfaces.ISurveyService;
 import lombok.RequiredArgsConstructor;
@@ -41,12 +39,14 @@ public class SurveyEditionService implements ISurveyEditionService {
     }
 
     @Override
-    public SurveyEditionDto findById(Long aLong) {
-        return null;
+    public SurveyEditionDto findById(Long id) {
+        SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+        return surveyEditionMapper.toDto(surveyEdition);
     }
 
     @Override
-    public SurveyEditionDto update(UpdateSurveyEditionDto updateSurveyEditionDto, Long aLong) {
+    public SurveyEditionDto update(UpdateSurveyEditionDto updateSurveyEditionDto, Long id) {
         return null;
     }
 
@@ -56,7 +56,7 @@ public class SurveyEditionService implements ISurveyEditionService {
     }
 
     @Override
-    public void delete(Long aLong) {
+    public void delete(Long id) {
 
     }
 }
