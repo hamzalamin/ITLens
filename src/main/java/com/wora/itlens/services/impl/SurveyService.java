@@ -1,5 +1,6 @@
 package com.wora.itlens.services.impl;
 
+import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.mappers.SurveyMapper;
 import com.wora.itlens.models.dtos.surveys.CreateSurveyDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +29,14 @@ public class SurveyService implements ISurveyService {
     }
 
     @Override
-    public SurveyDto findById(Long aLong) {
-        return null;
+    public SurveyDto findById(Long id) {
+        Survey survey = surveyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey", id));
+        return surveyMapper.toDto(survey);
     }
 
     @Override
-    public SurveyDto update(UpdateSurveyDto updateSurveyDto, Long aLong) {
+    public SurveyDto update(UpdateSurveyDto updateSurveyDto, Long id) {
         return null;
     }
 
@@ -42,7 +46,7 @@ public class SurveyService implements ISurveyService {
     }
 
     @Override
-    public void delete(Long aLong) {
+    public void delete(Long id) {
 
     }
 }
