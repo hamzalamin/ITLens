@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,12 +38,17 @@ public class SurveyService implements ISurveyService {
 
     @Override
     public SurveyDto update(UpdateSurveyDto updateSurveyDto, Long id) {
-        return null;
+        Survey survey = surveyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey", id));
+
+        survey.setTitle(updateSurveyDto.title());
+        survey.setDescription(updateSurveyDto.description());
+        Survey updatedSurvey = surveyRepository.save(survey);
+        return surveyMapper.toDto(updatedSurvey);
     }
 
     @Override
-    public List<SurveyDto> findAll() {
-        return List.of();
+
     }
 
     @Override
