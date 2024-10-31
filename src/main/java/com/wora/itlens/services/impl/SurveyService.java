@@ -4,6 +4,7 @@ import com.wora.itlens.mappers.SurveyMapper;
 import com.wora.itlens.models.dtos.surveys.CreateSurveyDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
 import com.wora.itlens.models.dtos.surveys.UpdateSurveyDto;
+import com.wora.itlens.models.entites.Survey;
 import com.wora.itlens.repositories.SurveyRepository;
 import com.wora.itlens.services.interfaces.ISurveyService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,9 @@ public class SurveyService implements ISurveyService {
 
     @Override
     public SurveyDto save(CreateSurveyDto createSurveyDto) {
-        return null;
+        Survey survey = surveyMapper.toEntity(createSurveyDto);
+        Survey savedSurvey = surveyRepository.save(survey);
+        return surveyMapper.toDto(savedSurvey);
     }
 
     @Override
