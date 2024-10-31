@@ -1,5 +1,6 @@
 package com.wora.itlens.services.impl;
 
+import com.wora.itlens.mappers.SurveyEditionMapper;
 import com.wora.itlens.models.dtos.surveyEditions.CreateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
@@ -13,6 +14,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SurveyEditionService implements ISurveyEditionService {
+
+    private final SurveyEditionRepository surveyEditionRepository;
+    private final SurveyEditionMapper surveyEditionMapper;
 
     @Override
     public SurveyEditionDto save(CreateSurveyEditionDto createSurveyEditionDto) {
