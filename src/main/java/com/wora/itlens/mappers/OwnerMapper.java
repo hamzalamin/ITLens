@@ -12,5 +12,6 @@ import org.mapstruct.Mapper;
 public interface OwnerMapper extends GenericMapper<OwnerDto, Owner> {
     Owner toEntity(CreateOwnerDto dto);
     Owner toEntity(UpdateOwnerDto dto);
+    Owner toEntity(OwnerDto dto);
     OwnerDto toDto(Owner owner);
 }
