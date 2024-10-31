@@ -24,5 +24,10 @@ public class SurveyController {
         return new ResponseEntity<>(surveyService.save(createSurveyDto), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<SurveyDto>> findAllSurveys(){
+        List<SurveyDto> surveyDtoList = surveyService.findAll();
+        return new ResponseEntity<>(surveyDtoList, HttpStatus.OK);
+    }
 
 }
