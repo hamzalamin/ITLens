@@ -27,4 +27,9 @@ public class SurveyEditionController {
         List<SurveyEditionDto> surveyEditionDtoList = surveyEditionService.findAll();
         return new ResponseEntity<>(surveyEditionDtoList, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SurveyEditionDto> findById(@PathVariable Long id){
+        return new ResponseEntity<>(surveyEditionService.findById(id), HttpStatus.OK);
+    }
 }
