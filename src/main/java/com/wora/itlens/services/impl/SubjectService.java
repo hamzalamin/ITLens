@@ -46,32 +46,32 @@ public class SubjectService implements ISubjectService {
 
     @Override
     public SubjectDto findById(Long id) {
-        Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
-        return subjectMapper.toDto(subject);
+        throw new UnsupportedOperationException("Generic save operation is not supported. Use saveSubject instead.");
+
     }
 
     @Override
     public SubjectDto update(UpdateSubjectDto updateSubjectDto, Long id) {
-        Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
+        throw new UnsupportedOperationException("Generic save operation is not supported. Use saveSubject instead.");
 
-        subject.setTitle(updateSubjectDto.title());
-        Subject updatedSubject = subjectRepository.save(subject);
-        return subjectMapper.toDto(updatedSubject);
     }
 
     @Override
     public List<SubjectDto> findAll() {
-        return subjectRepository.findAll().stream()
-                .map(subjectMapper::toDto)
-                .toList();
+        throw new UnsupportedOperationException("Generic save operation is not supported. Use saveSubject instead.");
+
     }
 
     @Override
     public void delete(Long id) {
-        Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Subject", id));
-        subjectRepository.delete(subject);
+        throw new UnsupportedOperationException("Generic save operation is not supported. Use saveSubject instead.");
+    }
+
+
+    @Override
+    public Subject getSubjectEntity(Long id) {
+        Subject subjectEntity = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject", id));;
+        return subjectEntity;
     }
 }
