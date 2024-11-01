@@ -45,7 +45,9 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public List<AnswerDto> findAll() {
-        return List.of();
+        return answerRepository.findAll().stream()
+                .map(answerMapper::toDto)
+                .toList();
     }
 
     @Override
