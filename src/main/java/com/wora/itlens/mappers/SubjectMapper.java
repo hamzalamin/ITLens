@@ -6,6 +6,7 @@ import com.wora.itlens.models.dtos.subjects.SubjectDto;
 import com.wora.itlens.models.dtos.subjects.UpdateSubjectDto;
 import com.wora.itlens.models.entites.Subject;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface SubjectMapper extends GenericMapper<Subject, SubjectDto> {

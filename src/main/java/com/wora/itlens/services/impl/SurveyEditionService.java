@@ -77,4 +77,11 @@ public class SurveyEditionService implements ISurveyEditionService {
                 .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
         surveyEditionRepository.delete(surveyEdition);
     }
+
+    @Override
+    public SurveyEdition getSurveyEditionEntity(Long id){
+        return surveyEditionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+    }
+
 }

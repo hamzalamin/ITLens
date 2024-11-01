@@ -28,8 +28,7 @@ public class Subject {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "survey_edition_id")
-    @NotNull
+    @JoinColumn(name = "survey_edition_id" , nullable = true)
     private SurveyEdition surveyEdition;
 
     @ManyToOne
