@@ -3,7 +3,9 @@ package com.wora.itlens.controllers;
 
 import com.wora.itlens.models.dtos.questions.CreateQuestionDto;
 import com.wora.itlens.models.dtos.questions.QuestionsDto;
+import com.wora.itlens.models.dtos.questions.UpdateQuestionDto;
 import com.wora.itlens.services.interfaces.IQuestionService;
+import jakarta.servlet.ServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,14 @@ public class QuestionController {
     public ResponseEntity<QuestionsDto> findById(@PathVariable Long id){
         QuestionsDto question = questionService.findById(id);
         return new ResponseEntity<>(question, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<QuestionsDto> updateQuestion(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateQuestionDto updateQuestionDto
+    ){
+        return new ResponseEntity<>(questionService.update(updateQuestionDto, id), HttpStatus.OK);
     }
 
 }
