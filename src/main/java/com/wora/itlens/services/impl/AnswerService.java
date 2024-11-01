@@ -52,6 +52,8 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public void delete(Long id) {
-
+        Answer answer = answerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Answer", id));
+        answerRepository.delete(answer);
     }
 }
