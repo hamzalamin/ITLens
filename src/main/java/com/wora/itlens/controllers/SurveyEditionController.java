@@ -37,7 +37,7 @@ public class SurveyEditionController {
     @PutMapping("/{id}")
     public ResponseEntity<SurveyEditionDto> updateSurveyEdition(
             @PathVariable Long id,
-            @RequestBody UpdateSurveyEditionDto updateSurveyEditionDto
+            @RequestBody @Valid UpdateSurveyEditionDto updateSurveyEditionDto
     ){
         return new ResponseEntity<>(surveyEditionService.update(updateSurveyEditionDto, id), HttpStatus.OK);
     }

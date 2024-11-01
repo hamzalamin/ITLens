@@ -4,6 +4,7 @@ import com.wora.itlens.models.dtos.subjects.CreateSubjectDto;
 import com.wora.itlens.models.dtos.subjects.SubjectDto;
 import com.wora.itlens.models.dtos.subjects.UpdateSubjectDto;
 import com.wora.itlens.services.interfaces.ISubSubjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class SubSubjectController {
     @PostMapping("/chapters/{subjectId}/subchapters")
     private ResponseEntity<SubjectDto> createSubSubject(
             @PathVariable Long subjectId,
-            @RequestBody CreateSubjectDto createSubjectDto)
+            @RequestBody @Valid CreateSubjectDto createSubjectDto)
     {
         return new ResponseEntity<>(subSubjectService.savedSubSubject(subjectId, createSubjectDto), HttpStatus.OK);
     }
@@ -29,7 +30,7 @@ public class SubSubjectController {
     @PutMapping("/chapters/{id}")
     public ResponseEntity<SubjectDto> updateSubject(
             @PathVariable Long id,
-            @RequestBody UpdateSubjectDto updateSubjectDto
+            @RequestBody @Valid UpdateSubjectDto updateSubjectDto
     ){
         return new ResponseEntity<>(subSubjectService.update(updateSubjectDto, id), HttpStatus.OK);
     }
