@@ -36,7 +36,11 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public AnswerDto update(UpdateAnswerDto updateAnswerDto, Long id) {
-        return null;
+        Answer answer = answerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Answer", id));
+        answer.setText(updateAnswerDto.text());
+        Answer updatedAnswer = answerRepository.save(answer);
+        return answerMapper.toDto(updatedAnswer);
     }
 
     @Override
