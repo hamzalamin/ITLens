@@ -30,4 +30,10 @@ public class QuestionController {
         return new ResponseEntity<>(questionsDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<QuestionsDto> findById(@PathVariable Long id){
+        QuestionsDto question = questionService.findById(id);
+        return new ResponseEntity<>(question, HttpStatus.OK);
+    }
+
 }
