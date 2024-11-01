@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/answer")
 public class AnswerController {
 
-    private IAnswerService answerService;
+    private final IAnswerService answerService;
 
     @PostMapping
     public ResponseEntity<AnswerDto> createAnswer(@RequestBody @Valid CreateAnswerDto createAnswerDto){
