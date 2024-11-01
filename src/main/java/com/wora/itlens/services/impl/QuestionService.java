@@ -61,6 +61,8 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public void delete(Long id) {
-
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Question", id));
+        questionRepository.delete(question);
     }
 }
