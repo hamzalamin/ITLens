@@ -1,6 +1,7 @@
 package com.wora.itlens.services.impl;
 
 import com.wora.itlens.exceptions.EntityNotFoundException;
+import com.wora.itlens.exceptions.SubSubjectConflictException;
 import com.wora.itlens.mappers.QuestionMapper;
 import com.wora.itlens.models.dtos.questions.CreateQuestionDto;
 import com.wora.itlens.models.dtos.questions.QuestionsDto;
@@ -26,23 +27,28 @@ public class QuestionService implements IQuestionService {
     @Override
     public QuestionsDto save(CreateQuestionDto createQuestionDto) {
         Subject subject = subjectService.getSubjectEntity(createQuestionDto.subjectId());
+        if (isHasSubSubjects(subject)) {
+            throw new SubSubjectConflictException("Cannot create question: Subsubjects already exist for the given subject.");
+        }
         Question question = questionMapper.toEntity(createQuestionDto);
         question.setSubject(subject);
         Question savedQuestion = questionRepository.save(question);
         return questionMapper.toDto(savedQuestion);
     }
 
+    private boolean isHasSubSubjects(Subject subject) {
+        return !subject.getSubSubjects().isEmpty();
+    }
+
     @Override
     public QuestionsDto findById(Long id) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Question", id));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
         return questionMapper.toDto(question);
     }
 
     @Override
     public QuestionsDto update(UpdateQuestionDto updateQuestionDto, Long id) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Question", id));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
         Subject subject = subjectService.getSubjectEntity(updateQuestionDto.subjectId());
 
         question.setText(updateQuestionDto.text());
@@ -54,15 +60,12 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public List<QuestionsDto> findAll() {
-        return questionRepository.findAll().stream()
-                .map(questionMapper::toDto)
-                .toList();
+        return questionRepository.findAll().stream().map(questionMapper::toDto).toList();
     }
 
     @Override
     public void delete(Long id) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Question", id));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
         questionRepository.delete(question);
     }
 }
