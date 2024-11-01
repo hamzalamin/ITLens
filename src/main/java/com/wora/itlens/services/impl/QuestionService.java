@@ -1,5 +1,6 @@
 package com.wora.itlens.services.impl;
 
+import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.mappers.QuestionMapper;
 import com.wora.itlens.models.dtos.questions.CreateQuestionDto;
 import com.wora.itlens.models.dtos.questions.QuestionsDto;
@@ -33,7 +34,9 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public QuestionsDto findById(Long id) {
-        return null;
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Quetion", id));
+        return questionMapper.toDto(question);
     }
 
     @Override
