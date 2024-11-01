@@ -5,7 +5,6 @@ import com.wora.itlens.models.dtos.questions.CreateQuestionDto;
 import com.wora.itlens.models.dtos.questions.QuestionsDto;
 import com.wora.itlens.models.dtos.questions.UpdateQuestionDto;
 import com.wora.itlens.services.interfaces.IQuestionService;
-import jakarta.servlet.ServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

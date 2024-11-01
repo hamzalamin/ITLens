@@ -8,6 +8,6 @@ import jakarta.validation.constraints.Positive;
 public record CreateQuestionDto(
         @NotBlank String text,
         @NotNull QuestionType questionType,
-        @NotNull @Positive Long subject
+        @NotNull @Positive Long subjectId
 ) {
 }
