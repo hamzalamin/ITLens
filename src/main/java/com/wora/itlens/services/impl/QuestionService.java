@@ -25,7 +25,7 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public QuestionsDto save(CreateQuestionDto createQuestionDto) {
-        Subject subject = subjectService.getSubjectEntity(createQuestionDto.id());
+        Subject subject = subjectService.getSubjectEntity(createQuestionDto.subject());
         Question question = questionMapper.toEntity(createQuestionDto);
         question.setSubject(subject);
         Question savedQuestion = questionRepository.save(question);
@@ -35,13 +35,21 @@ public class QuestionService implements IQuestionService {
     @Override
     public QuestionsDto findById(Long id) {
         Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Quetion", id));
+                .orElseThrow(() -> new EntityNotFoundException("Question", id));
         return questionMapper.toDto(question);
     }
 
     @Override
     public QuestionsDto update(UpdateQuestionDto updateQuestionDto, Long id) {
-        return null;
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Question", id));
+        Subject subject = subjectService.getSubjectEntity(updateQuestionDto.subject());
+
+        question.setText(updateQuestionDto.text());
+        question.setQuestionType(updateQuestionDto.questionType());
+        question.setSubject(subject);
+        Question updatedQuestion = questionRepository.save(question);
+        return questionMapper.toDto(updatedQuestion);
     }
 
     @Override
