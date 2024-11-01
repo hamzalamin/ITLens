@@ -54,7 +54,9 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public List<QuestionsDto> findAll() {
-        return List.of();
+        return questionRepository.findAll().stream()
+                .map(questionMapper::toDto)
+                .toList();
     }
 
     @Override
