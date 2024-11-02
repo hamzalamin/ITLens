@@ -29,8 +29,8 @@ public class Question {
     private String text;
 
     @NotNull
-    @Column(name = "answer_count")
-    private Integer answerCount;
+    @Column(name = "answer_count", nullable = false)
+    private Integer answerCount = 0;
 
     @NotBlank
     @Enumerated(EnumType.STRING)

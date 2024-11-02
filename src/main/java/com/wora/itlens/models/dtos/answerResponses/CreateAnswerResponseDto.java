@@ -1,4 +1,10 @@
 package com.wora.itlens.models.dtos.answerResponses;
 
-public record CreateAnswerResponseDto() {
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public record CreateAnswerResponseDto(
+        @Positive @NotNull Long answerId,
+        @Positive @NotNull Long questionId
+) {
 }

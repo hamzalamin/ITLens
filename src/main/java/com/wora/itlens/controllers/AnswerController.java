@@ -1,6 +1,8 @@
 package com.wora.itlens.controllers;
 
 
+import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
+import com.wora.itlens.models.dtos.answerResponses.CreateAnswerResponseDto;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;
@@ -49,5 +51,10 @@ public class AnswerController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         answerService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/response")
+    public ResponseEntity<AnswerResponseDto> saveAnswerResponse(@RequestBody CreateAnswerResponseDto createAnswerResponseDto){
+        return new  ResponseEntity<>(answerService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
     }
 }

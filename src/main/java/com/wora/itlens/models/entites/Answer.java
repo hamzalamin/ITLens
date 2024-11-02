@@ -26,10 +26,10 @@ public class Answer {
     private String text;
 
     @NotNull
-    @Column(name = "selection_count")
-    private Integer selectionCount;
+    @Column(name = "selection_count", nullable = false)
+    private Integer selectionCount = 0;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
