@@ -6,4 +6,5 @@ import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;
 import com.wora.itlens.services.GenericService;
 
 public interface IAnswerService extends GenericService<CreateAnswerDto, UpdateAnswerDto, AnswerDto, Long> {
+    AnswerDto saveUserAnswer();
 }
