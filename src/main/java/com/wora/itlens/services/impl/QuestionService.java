@@ -68,4 +68,9 @@ public class QuestionService implements IQuestionService {
         Question question = questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
         questionRepository.delete(question);
     }
+
+    @Override
+    public Question getQuestionEntity(Long id) {
+        return questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
+    }
 }

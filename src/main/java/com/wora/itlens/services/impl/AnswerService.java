@@ -2,12 +2,14 @@ package com.wora.itlens.services.impl;
 
 import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.mappers.AnswerMapper;
+import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;
 import com.wora.itlens.models.entites.Answer;
 import com.wora.itlens.repositories.AnswerRepository;
 import com.wora.itlens.services.interfaces.IAnswerService;
+import com.wora.itlens.services.interfaces.IQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class AnswerService implements IAnswerService {
 
     private final AnswerRepository answerRepository;
     private final AnswerMapper answerMapper;
+    private final IQuestionService questionService;
 
     @Override
     public AnswerDto save(CreateAnswerDto createAnswerDto) {
@@ -55,5 +58,12 @@ public class AnswerService implements IAnswerService {
         Answer answer = answerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Answer", id));
         answerRepository.delete(answer);
+    }
+
+    @Override
+    public AnswerResponseDto saveUserAnswer(Long answerId, Long questionId) {
+
+
+        return null;
     }
 }
