@@ -73,4 +73,16 @@ public class QuestionService implements IQuestionService {
     public Question getQuestionEntity(Long id) {
         return questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
     }
+
+    @Override
+    public Question saveQuestionEntity(Question question) {
+        if (question.getId() != null) {
+            Question question1 = questionRepository.findById(question.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Question", question.getId()));
+            question1.setAnswerCount(question.getAnswerCount());
+            return questionRepository.save(question1);
+        }
+        return questionRepository.save(question);
+    }
+
 }

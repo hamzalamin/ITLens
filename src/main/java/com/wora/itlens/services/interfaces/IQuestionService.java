@@ -9,4 +9,5 @@ import com.wora.itlens.services.GenericService;
 
 public interface IQuestionService extends GenericService<CreateQuestionDto, UpdateQuestionDto, QuestionsDto, Long> {
     Question getQuestionEntity(Long id);
+    Question saveQuestionEntity(Question question);
 }

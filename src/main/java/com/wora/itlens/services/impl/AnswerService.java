@@ -2,11 +2,13 @@ package com.wora.itlens.services.impl;
 
 import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.mappers.AnswerMapper;
+import com.wora.itlens.mappers.AnswerResponseMapper;
 import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;
 import com.wora.itlens.models.entites.Answer;
+import com.wora.itlens.models.entites.Question;
 import com.wora.itlens.repositories.AnswerRepository;
 import com.wora.itlens.services.interfaces.IAnswerService;
 import com.wora.itlens.services.interfaces.IQuestionService;
@@ -22,6 +24,7 @@ public class AnswerService implements IAnswerService {
     private final AnswerRepository answerRepository;
     private final AnswerMapper answerMapper;
     private final IQuestionService questionService;
+    private final AnswerResponseMapper answerResponseMapper;
 
     @Override
     public AnswerDto save(CreateAnswerDto createAnswerDto) {
@@ -62,8 +65,20 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public AnswerResponseDto saveUserAnswer(Long answerId, Long questionId) {
+        Question question = questionService.getQuestionEntity(questionId);
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new EntityNotFoundException("Answer", questionId));
 
+        if (!answer.getQuestion().getId().equals(questionId)) {
+            throw new IllegalArgumentException("Answer does not belong to the specified question");
+        }
 
-        return null;
+        question.setAnswerCount(question.getAnswerCount() + 1);
+        answer.setSelectionCount(answer.getSelectionCount() + 1);
+        questionService.saveQuestionEntity(question);
+        answer = answerRepository.save(answer);
+
+        return answerResponseMapper.toDto(answer, question);
+
     }
 }
