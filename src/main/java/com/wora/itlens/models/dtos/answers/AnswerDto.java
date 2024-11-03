@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Positive;
 public record AnswerDto(
         @Positive @NotNull Long id,
         @NotBlank String text,
-        @Positive @NotNull Integer selectionCount,
-        EmbeddedQuestionDto question
+        @Positive @NotNull Integer selectionCount
 ){
 }

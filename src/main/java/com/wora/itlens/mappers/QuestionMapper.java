@@ -2,6 +2,7 @@ package com.wora.itlens.mappers;
 
 import com.wora.itlens.mappers.api.GenericMapper;
 import com.wora.itlens.models.dtos.questions.CreateQuestionDto;
+import com.wora.itlens.models.dtos.questions.EmbeddedQuestionDto;
 import com.wora.itlens.models.dtos.questions.QuestionsDto;
 import com.wora.itlens.models.dtos.questions.UpdateQuestionDto;
 import com.wora.itlens.models.entites.Question;

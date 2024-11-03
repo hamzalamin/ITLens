@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {AnswerMapper.class, QuestionMapper.class})
 public interface AnswerResponseMapper {
-
     @Mapping(target = "answer", source = "answer")
     @Mapping(target = "question", source = "question")
     AnswerResponseDto toDto(Answer answer, Question question);

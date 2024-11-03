@@ -93,4 +93,24 @@ public class AnswerService implements IAnswerService {
         return answerResponseMapper.toDto(answer, answer.getQuestion());
     }
 
+
+    @Override
+    public Answer getAnswerEntity(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Answer ID must not be null");
+        }
+        return answerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Answer", id));
+    }
+
+    @Override
+    public Answer saveAnswerEntity(Answer answer) {
+        if (answer.getId() != null) {
+            Answer answer1 = answerRepository.findById(answer.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Question", answer.getId()));
+            answer1.setSelectionCount(answer.getSelectionCount());
+            return answerRepository.save(answer1);
+        }
+        return answerRepository.save(answer);
+    }
+
 }

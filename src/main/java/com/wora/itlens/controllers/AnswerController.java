@@ -22,6 +22,7 @@ public class AnswerController {
 
     private final IAnswerService answerService;
 
+
     @PostMapping
     public ResponseEntity<AnswerDto> createAnswer(@RequestBody @Valid CreateAnswerDto createAnswerDto){
         return new ResponseEntity<>(answerService.save(createAnswerDto), HttpStatus.CREATED);
@@ -57,4 +58,11 @@ public class AnswerController {
     public ResponseEntity<AnswerResponseDto> saveAnswerResponse(@RequestBody CreateAnswerResponseDto createAnswerResponseDto){
         return new  ResponseEntity<>(answerService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
     }
+
+
+//    @PostMapping("/multiple")
+//    public ResponseEntity<List<AnswerResponseDto>> saveUserMultipleAnswer(@RequestBody MultipleAnswersDto dto) {
+//        List<AnswerResponseDto> answerResponseDtoList = answerService.saveUserMultipleAnswer(dto);
+//        return new ResponseEntity<>(answerResponseDtoList, HttpStatus.CREATED);
+//    }
 }

@@ -71,6 +71,9 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public Question getQuestionEntity(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("question ID must not be null");
+        }
         return questionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Question", id));
     }
 
