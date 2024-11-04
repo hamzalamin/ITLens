@@ -7,9 +7,8 @@ import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.entites.Answer;
 import com.wora.itlens.models.entites.Question;
 import com.wora.itlens.repositories.AnswerRepository;
-import com.wora.itlens.services.interfaces.IAnswerService;
 import com.wora.itlens.services.interfaces.IQuestionService;
-import org.junit.jupiter.api.BeforeEach;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,11 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.xml.validation.Validator;
-
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -44,10 +39,8 @@ class AnswerServiceTest {
     @DisplayName("Should Create Successfully")
     void create_shouldCreteSuccessfully(){
         CreateAnswerDto createAnswerDto = new CreateAnswerDto("TEST TEST YAN SIN", 1L);
-
         Question question = new Question();
         question.setId(1L);
-
 
         Answer expectedAnswer = new Answer();
         expectedAnswer.setText("TEST TEST YAN SIN");
@@ -64,4 +57,20 @@ class AnswerServiceTest {
         verify(answerRepository).save(expectedAnswer);
         verify(answerMapper).toDto(expectedAnswer);
     }
+
+    @Test
+    @DisplayName("Should Throw Exception When Question Not Found")
+    void Create_ShouldThrowExceptionWhenQuestionNotFound(){
+        CreateAnswerDto createAnswerDto = new CreateAnswerDto( "Check Yan Sin", 1L);
+        when(questionService.getQuestionEntity(createAnswerDto.questionId()))
+                .thenThrow(new RuntimeException("Question not found"));
+
+        Exception exception = assertThrows(RuntimeException.class, () -> sut.save(createAnswerDto));
+        assertEquals("Question not found", exception.getMessage());
+
+        verify(questionService).getQuestionEntity(createAnswerDto.questionId());
+        verifyNoMoreInteractions(answerMapper, answerRepository);
+    }
+
+
 }
