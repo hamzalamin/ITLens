@@ -1,6 +1,5 @@
 package com.wora.itlens.services.impl;
 
-import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.exceptions.InvalidAnswerException;
 import com.wora.itlens.mappers.AnswerResponseMapper;
 import com.wora.itlens.models.dtos.answerResponses.*;
@@ -10,7 +9,6 @@ import com.wora.itlens.services.interfaces.IAnswerResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

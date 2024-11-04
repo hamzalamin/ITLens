@@ -28,8 +28,37 @@ public class AnswerResponseController {
     }
 
     @PostMapping("/response")
-    public ResponseEntity<AnswerResponseDto> saveAnswerResponse(@RequestBody CreateAnswerResponseDto createAnswerResponseDto){
-        return new  ResponseEntity<>(answerResponseService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
+    public ResponseEntity<AnswerResponseDto> saveAnswerResponse(@RequestBody CreateAnswerResponseDto createAnswerResponseDto) {
+        return new ResponseEntity<>(answerResponseService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
+    }
+
+    @PostMapping("/handleAll")
+    public ResponseEntity<?> handleAll(@RequestBody GeneralRequestDto generalRequestDto) {
+        System.out.println("dto li feha kouulchi " + generalRequestDto);
+
+        try {
+            CreateAnswerResponseDto createAnswerResponseDto = generalRequestDto.createAnswerResponseDto();
+            CreateMultipleAnswersAndMultipleResponsesDto createMultipleAnswersAndMultipleResponsesDto = generalRequestDto.createMultipleAnswersAndMultipleResponsesDto();
+            CreateMultipleAnswersAndOneQuestionDto createMultipleAnswersAndOneQuestionDto = generalRequestDto.createMultipleAnswersAndOneQuestionDto();
+
+            if (createAnswerResponseDto != null) {
+                answerResponseService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId());
+            }
+            if (createMultipleAnswersAndMultipleResponsesDto != null) {
+                answerResponseService.processMultipleQuestionsAndAnswers(createMultipleAnswersAndMultipleResponsesDto);
+                System.out.println("normalment hani dwwwit 2");
+
+            }
+            if (createMultipleAnswersAndOneQuestionDto != null) {
+                answerResponseService.createAnswersForQuestion(createMultipleAnswersAndOneQuestionDto);
+                System.out.println("normalment hani dwwwit 3");
+
+            }
+
+            return ResponseEntity.ok("CREATED SUCCESSFULLY");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request");
+        }
     }
 
 }

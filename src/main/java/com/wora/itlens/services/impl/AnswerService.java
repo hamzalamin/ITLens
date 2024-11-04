@@ -1,10 +1,8 @@
 package com.wora.itlens.services.impl;
 
 import com.wora.itlens.exceptions.EntityNotFoundException;
-import com.wora.itlens.exceptions.InvalidAnswerException;
 import com.wora.itlens.mappers.AnswerMapper;
 import com.wora.itlens.mappers.AnswerResponseMapper;
-import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;
@@ -25,7 +23,6 @@ public class AnswerService implements IAnswerService {
     private final AnswerRepository answerRepository;
     private final AnswerMapper answerMapper;
     private final IQuestionService questionService;
-    private final AnswerResponseMapper answerResponseMapper;
 
     @Override
     public AnswerDto save(CreateAnswerDto createAnswerDto) {
