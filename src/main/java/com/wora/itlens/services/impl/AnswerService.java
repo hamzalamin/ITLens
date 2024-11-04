@@ -2,7 +2,6 @@ package com.wora.itlens.services.impl;
 
 import com.wora.itlens.exceptions.EntityNotFoundException;
 import com.wora.itlens.mappers.AnswerMapper;
-import com.wora.itlens.mappers.AnswerResponseMapper;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;
