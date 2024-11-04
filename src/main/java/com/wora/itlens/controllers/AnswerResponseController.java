@@ -32,7 +32,7 @@ public class AnswerResponseController {
         return new ResponseEntity<>(answerResponseService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
     }
 
-    @PostMapping("/handleAll")
+    @PostMapping("/participate")
     public ResponseEntity<?> handleAll(@RequestBody GeneralRequestDto generalRequestDto) {
         System.out.println("dto li feha kouulchi " + generalRequestDto);
 
