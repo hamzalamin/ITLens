@@ -8,6 +8,7 @@ import com.wora.itlens.services.interfaces.IAnswerResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,8 +48,34 @@ public class AnswerResponseService implements IAnswerResponseService {
     }
 
     @Override
-    public List<QuestionWithAnswersResponseDto> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto) {
-        return List.of();
+    public List<Object> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto) {
+        int newAnswersCount = dto.answers().size();
+        int newQuestionsCount = dto.questions().size();
+
+        List<AnswerResponseDto> createdAnswerResponses = dto.answers().stream()
+                .map(answerDto -> {
+                    Answer answer = answerService.getAnswerEntity(answerDto.id());
+                    answer.setSelectionCount(answer.getSelectionCount() + 1);
+                    Answer savedAnswer = answerService.saveAnswerEntity(answer);
+                    return answerResponseMapper.toDto(savedAnswer);
+                })
+                .toList();
+
+        List<AnswerResponseDto> createdQuestionResponses = dto.questions().stream()
+                .map(questionDto -> {
+                    Question question = questionService.getQuestionEntity(questionDto.id());
+                    question.setAnswerCount(question.getAnswerCount() + 1);
+                    Question savedQuestion = questionService.saveQuestionEntity(question);
+                    return answerResponseMapper.toDto(savedQuestion);
+                })
+                .toList();
+
+        List<Object> combinedResponses = new ArrayList<>();
+        combinedResponses.addAll(createdAnswerResponses);
+        combinedResponses.addAll(createdQuestionResponses);
+
+        return combinedResponses;
     }
+
 }
 

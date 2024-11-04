@@ -15,4 +15,7 @@ public interface AnswerResponseMapper {
     AnswerResponseDto toDto(Answer answer, Question question);
     EmbeddedAnswerDto toEmbeddedAnswerDto(Answer answer);
     EmbeddedQuestionDto toEmbeddedQuestionDto(Question question);
+    AnswerResponseDto toDto(Question question);
+    AnswerResponseDto toDto(Answer answer);
+
 }
