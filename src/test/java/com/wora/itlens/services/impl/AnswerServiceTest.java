@@ -72,5 +72,28 @@ class AnswerServiceTest {
         verifyNoMoreInteractions(answerMapper, answerRepository);
     }
 
+    @Test
+    @DisplayName("Should Throw Exception When Saving Answer Fails")
+    void create_shouldThrowExceptionWhenSavingAnswerFails() {
+        CreateAnswerDto createAnswerDto = new CreateAnswerDto( "Check Yan Sin", 1L);
+        Question question = new Question();
+        question.setId(1L);
+
+        Answer expectedAnswer = new Answer();
+        expectedAnswer.setText("TEST TEST YAN SIN");
+
+        when(questionService.getQuestionEntity(createAnswerDto.questionId())).thenReturn(question);
+        when(answerMapper.toEntity(createAnswerDto)).thenReturn(expectedAnswer);
+        when(answerRepository.save(expectedAnswer)).thenThrow(new RuntimeException("Failed save"));
+
+        Exception exception = assertThrows(RuntimeException.class, () -> sut.save(createAnswerDto));
+        assertEquals("Failed save", exception.getMessage());
+
+        verify(questionService).getQuestionEntity(createAnswerDto.questionId());
+        verify(answerMapper).toEntity(createAnswerDto);
+        verify(answerRepository).save(expectedAnswer);
+        verifyNoMoreInteractions(answerMapper);
+
+    }
 
 }
