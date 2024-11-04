@@ -66,32 +66,6 @@ public class AnswerService implements IAnswerService {
         answerRepository.delete(answer);
     }
 
-    @Override
-    public AnswerResponseDto saveUserAnswer(Long answerId, Long questionId) {
-        Answer answer = answerRepository.findById(answerId)
-                .orElseThrow(() -> new EntityNotFoundException("Answer not found with id: " , answerId));
-
-        Question question = questionService.getQuestionEntity(questionId);
-
-        if (answer.getQuestion() == null || !question.getId().equals(questionId)) {
-            throw new InvalidAnswerException("Answer " + answerId + " does not belong to question " + questionId);
-        }
-
-        Integer answerCount = answer.getQuestion().getAnswerCount();
-        if (answerCount == null) {
-            answerCount = 0;
-        }
-        answer.getQuestion().setAnswerCount(answerCount + 1);
-
-        Integer selectionCount = answer.getSelectionCount();
-        if (selectionCount == null) {
-            selectionCount = 0;
-        }
-        answer.setSelectionCount(selectionCount + 1);
-
-        answer = answerRepository.save(answer);
-        return answerResponseMapper.toDto(answer, answer.getQuestion());
-    }
 
 
     @Override

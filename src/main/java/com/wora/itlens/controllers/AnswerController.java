@@ -54,15 +54,5 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/response")
-    public ResponseEntity<AnswerResponseDto> saveAnswerResponse(@RequestBody CreateAnswerResponseDto createAnswerResponseDto){
-        return new  ResponseEntity<>(answerService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
-    }
 
-
-//    @PostMapping("/multiple")
-//    public ResponseEntity<List<AnswerResponseDto>> saveUserMultipleAnswer(@RequestBody MultipleAnswersDto dto) {
-//        List<AnswerResponseDto> answerResponseDtoList = answerService.saveUserMultipleAnswer(dto);
-//        return new ResponseEntity<>(answerResponseDtoList, HttpStatus.CREATED);
-//    }
 }

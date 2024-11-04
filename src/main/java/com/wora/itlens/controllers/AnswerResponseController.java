@@ -1,11 +1,7 @@
 package com.wora.itlens.controllers;
 
-import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
-import com.wora.itlens.models.dtos.answerResponses.CreateMultipleAnswersAndMultipleResponsesDto;
-import com.wora.itlens.models.dtos.answerResponses.CreateMultipleAnswersAndOneQuestionDto;
-import com.wora.itlens.models.dtos.answerResponses.QuestionWithAnswersResponseDto;
+import com.wora.itlens.models.dtos.answerResponses.*;
 import com.wora.itlens.services.interfaces.IAnswerResponseService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +27,9 @@ public class AnswerResponseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    @PostMapping("/response")
+    public ResponseEntity<AnswerResponseDto> saveAnswerResponse(@RequestBody CreateAnswerResponseDto createAnswerResponseDto){
+        return new  ResponseEntity<>(answerResponseService.saveUserAnswer(createAnswerResponseDto.answerId(), createAnswerResponseDto.questionId()), HttpStatus.OK);
+    }
 
 }

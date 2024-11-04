@@ -1,5 +1,7 @@
 package com.wora.itlens.services.impl;
 
+import com.wora.itlens.exceptions.EntityNotFoundException;
+import com.wora.itlens.exceptions.InvalidAnswerException;
 import com.wora.itlens.mappers.AnswerResponseMapper;
 import com.wora.itlens.models.dtos.answerResponses.*;
 import com.wora.itlens.models.entites.Answer;
@@ -51,12 +53,10 @@ public class AnswerResponseService implements IAnswerResponseService {
     public List<QuestionWithAnswersResponseDto> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto) {
         List<QuestionWithAnswersResponseDto> responses = dto.questions().stream()
                 .map(questionDto -> {
-                    // Retrieve and update question entity
                     Question question = questionService.getQuestionEntity(questionDto.id());
                     int newAnswersCount = questionDto.answers().size();
                     question.setAnswerCount(question.getAnswerCount() + newAnswersCount);
 
-                    // Create or update each answer associated with the question
                     List<AnswerResponseDto> createdAnswerResponses = questionDto.answers().stream()
                             .map(answerDto -> {
                                 Answer answer = answerService.getAnswerEntity(answerDto.id());
@@ -66,10 +66,8 @@ public class AnswerResponseService implements IAnswerResponseService {
                             })
                             .toList();
 
-                    // Save updated question
                     Question savedQuestion = questionService.saveQuestionEntity(question);
 
-                    // Map question and its answers to the response DTO
                     return new QuestionWithAnswersResponseDto(
                             answerResponseMapper.toEmbeddedQuestionDto(savedQuestion),
                             createdAnswerResponses
@@ -78,6 +76,32 @@ public class AnswerResponseService implements IAnswerResponseService {
                 .toList();
 
         return responses;
+    }
+
+
+    @Override
+    public AnswerResponseDto saveUserAnswer(Long answerId, Long questionId) {
+        Answer answer = answerService.getAnswerEntity(answerId);
+        Question question = questionService.getQuestionEntity(questionId);
+
+        if (answer.getQuestion() == null || !question.getId().equals(questionId)) {
+            throw new InvalidAnswerException("Answer " + answerId + " does not belong to question " + questionId);
+        }
+
+        Integer answerCount = answer.getQuestion().getAnswerCount();
+        if (answerCount == null) {
+            answerCount = 0;
+        }
+        answer.getQuestion().setAnswerCount(answerCount + 1);
+
+        Integer selectionCount = answer.getSelectionCount();
+        if (selectionCount == null) {
+            selectionCount = 0;
+        }
+        answer.setSelectionCount(selectionCount + 1);
+
+        answer = answerService.saveAnswerEntity(answer);
+        return answerResponseMapper.toDto(answer, answer.getQuestion());
     }
 
 
