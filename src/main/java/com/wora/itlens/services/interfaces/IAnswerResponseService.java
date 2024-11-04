@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IAnswerResponseService {
     List<QuestionWithAnswersResponseDto> createAnswersForQuestion(CreateMultipleAnswersAndOneQuestionDto dto);
-    List<Object> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto);
+    List<QuestionWithAnswersResponseDto> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto);
 
 }

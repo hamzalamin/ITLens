@@ -25,11 +25,12 @@ public class AnswerResponseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAnswers);
     }
 
-    @PostMapping("/process")
-    public ResponseEntity<?> processMultipleQuestionsAndAnswers(@RequestBody CreateMultipleAnswersAndMultipleResponsesDto dto) {
-        List<Object> response = answerResponseService.processMultipleQuestionsAndAnswers(dto);
-        return ResponseEntity.ok(response);
+    @PostMapping("/process-multiple")
+    public ResponseEntity<List<QuestionWithAnswersResponseDto>> processMultipleQuestionsAndAnswers(@RequestBody CreateMultipleAnswersAndMultipleResponsesDto dto) {
+        List<QuestionWithAnswersResponseDto> response = answerResponseService.processMultipleQuestionsAndAnswers(dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
 
 }

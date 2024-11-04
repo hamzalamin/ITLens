@@ -48,34 +48,38 @@ public class AnswerResponseService implements IAnswerResponseService {
     }
 
     @Override
-    public List<Object> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto) {
-        int newAnswersCount = dto.answers().size();
-        int newQuestionsCount = dto.questions().size();
-
-        List<AnswerResponseDto> createdAnswerResponses = dto.answers().stream()
-                .map(answerDto -> {
-                    Answer answer = answerService.getAnswerEntity(answerDto.id());
-                    answer.setSelectionCount(answer.getSelectionCount() + 1);
-                    Answer savedAnswer = answerService.saveAnswerEntity(answer);
-                    return answerResponseMapper.toDto(savedAnswer);
-                })
-                .toList();
-
-        List<AnswerResponseDto> createdQuestionResponses = dto.questions().stream()
+    public List<QuestionWithAnswersResponseDto> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto) {
+        List<QuestionWithAnswersResponseDto> responses = dto.questions().stream()
                 .map(questionDto -> {
+                    // Retrieve and update question entity
                     Question question = questionService.getQuestionEntity(questionDto.id());
-                    question.setAnswerCount(question.getAnswerCount() + 1);
+                    int newAnswersCount = questionDto.answers().size();
+                    question.setAnswerCount(question.getAnswerCount() + newAnswersCount);
+
+                    // Create or update each answer associated with the question
+                    List<AnswerResponseDto> createdAnswerResponses = questionDto.answers().stream()
+                            .map(answerDto -> {
+                                Answer answer = answerService.getAnswerEntity(answerDto.id());
+                                answer.setSelectionCount(answer.getSelectionCount() + 1);
+                                Answer savedAnswer = answerService.saveAnswerEntity(answer);
+                                return answerResponseMapper.toDto(savedAnswer, question);
+                            })
+                            .toList();
+
+                    // Save updated question
                     Question savedQuestion = questionService.saveQuestionEntity(question);
-                    return answerResponseMapper.toDto(savedQuestion);
+
+                    // Map question and its answers to the response DTO
+                    return new QuestionWithAnswersResponseDto(
+                            answerResponseMapper.toEmbeddedQuestionDto(savedQuestion),
+                            createdAnswerResponses
+                    );
                 })
                 .toList();
 
-        List<Object> combinedResponses = new ArrayList<>();
-        combinedResponses.addAll(createdAnswerResponses);
-        combinedResponses.addAll(createdQuestionResponses);
-
-        return combinedResponses;
+        return responses;
     }
+
 
 }
 
