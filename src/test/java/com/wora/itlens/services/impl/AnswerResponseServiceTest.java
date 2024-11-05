@@ -71,4 +71,24 @@ class AnswerResponseServiceTest {
     }
 
 
+    @Test
+    @DisplayName("createAnswersForQuestion() Should not change counts when no answers are provided")
+    void createAnswersForQuestion_noAnswersProvided_shouldNotChangeCounts() {
+        Long questionId = 1L;
+        CreateMultipleAnswersAndOneQuestionDto dto = new CreateMultipleAnswersAndOneQuestionDto(List.of(), questionId);
+
+        Question mockQuestion = new Question();
+        mockQuestion.setAnswerCount(2);
+
+        when(questionService.getQuestionEntity(questionId)).thenReturn(mockQuestion);
+
+        answerResponseService.createAnswersForQuestion(dto);
+
+        verify(questionService).getQuestionEntity(questionId);
+        verify(questionService).saveQuestionEntity(mockQuestion);
+
+        assertEquals(2, mockQuestion.getAnswerCount());
+    }
+
+
 }
