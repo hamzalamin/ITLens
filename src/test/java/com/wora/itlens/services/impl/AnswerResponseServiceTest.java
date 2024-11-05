@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -89,6 +90,30 @@ class AnswerResponseServiceTest {
 
         assertEquals(2, mockQuestion.getAnswerCount());
     }
+
+    @Test
+    @DisplayName("createAnswersForQuestion() Should throw exception for invalid answer ID")
+    void createAnswersForQuestion_invalidAnswerId_shouldThrowException() {
+        Long questionId = 1L;
+        CreateMultipleAnswersAndOneQuestionDto dto = new CreateMultipleAnswersAndOneQuestionDto(
+                List.of(new AnswerDto(999L, "Invalid Answer", 1)), questionId
+        );
+
+        Question mockQuestion = new Question();
+        mockQuestion.setAnswerCount(2);
+
+        when(questionService.getQuestionEntity(questionId)).thenReturn(mockQuestion);
+        when(answerService.getAnswerEntity(999L)).thenThrow(new NoSuchElementException("Answer not found"));
+
+        assertThrows(NoSuchElementException.class, () -> {
+            answerResponseService.createAnswersForQuestion(dto);
+        });
+
+        verify(questionService).getQuestionEntity(questionId);
+        verify(answerService).getAnswerEntity(999L);
+        verifyNoMoreInteractions(questionService);
+    }
+
 
 
 }
