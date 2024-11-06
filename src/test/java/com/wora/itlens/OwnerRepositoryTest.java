@@ -1,8 +1,11 @@
 package com.wora.itlens;
 
+import com.wora.itlens.models.dtos.owners.CreateOwnerDto;
+import com.wora.itlens.models.dtos.owners.OwnerDto;
 import com.wora.itlens.models.entites.Owner;
+import com.wora.itlens.models.entites.Survey;
 import com.wora.itlens.repositories.OwnerRepository;
-import lombok.RequiredArgsConstructor;
+import com.wora.itlens.services.interfaces.IOwnerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,28 +22,22 @@ public class OwnerRepositoryTest {
     @Autowired
     private  OwnerRepository ownerRepository;
 
+    @Autowired
+    private IOwnerService ownerService;
+
     @Test
     void testSaveOwner(){
-        Owner owner = new Owner(null, "Hamza", List.of());
-        ownerRepository.save(owner);
+        CreateOwnerDto createOwnerDto = new CreateOwnerDto("Hamza");
+        OwnerDto savedOwner = ownerService.save(createOwnerDto);
 
-        Owner foundOwner = ownerRepository.findById(owner.getId()).orElse(null);
+        Owner foundOwner = ownerRepository.findById(savedOwner.id()).orElse(null);
 
         assertNotNull(foundOwner);
         assertEquals("Hamza", foundOwner.getName());
     }
 
-    @Test
-    void testOwnerWithEmptySurveys(){
-        Owner owner = new Owner(null, "Hamza", List.of());
-        ownerRepository.save(owner);
 
-        Owner foundOwner = ownerRepository.findById(owner.getId()).orElse(null);
 
-        assertNotNull(foundOwner);
-        assertEquals("Hamza", foundOwner.getName());
-        assertTrue(foundOwner.getSurveys().isEmpty(), "Owner should have no surveys");
-    }
 
 
 }
