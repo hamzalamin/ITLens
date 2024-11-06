@@ -231,5 +231,19 @@ class AnswerResponseServiceTest {
         });
     }
 
+    @Test
+    @DisplayName("saveUserAnswer() should throw NullPointerException if answer or question is null")
+    void saveUserAnswer_shouldThrowNullPointerExceptionIfNullAnswerOrQuestion() {
+        Long nullAnswerId = 999L;
+        Long nullQuestionId = 999L;
+
+        when(answerService.getAnswerEntity(nullAnswerId)).thenReturn(null);
+        when(questionService.getQuestionEntity(nullQuestionId)).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> {
+            answerResponseService.saveUserAnswer(nullAnswerId, nullQuestionId);
+        });
+    }
+
 
 }
