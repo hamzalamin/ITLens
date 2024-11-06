@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -30,4 +29,18 @@ public class OwnerRepositoryTest {
         assertNotNull(foundOwner);
         assertEquals("Hamza", foundOwner.getName());
     }
+
+    @Test
+    void testOwnerWithEmptySurveys(){
+        Owner owner = new Owner(null, "Hamza", List.of());
+        ownerRepository.save(owner);
+
+        Owner foundOwner = ownerRepository.findById(owner.getId()).orElse(null);
+
+        assertNotNull(foundOwner);
+        assertEquals("Hamza", foundOwner.getName());
+        assertTrue(foundOwner.getSurveys().isEmpty(), "Owner should have no surveys");
+    }
+
+
 }
