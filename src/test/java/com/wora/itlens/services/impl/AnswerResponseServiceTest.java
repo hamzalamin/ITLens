@@ -11,8 +11,8 @@ import com.wora.itlens.models.dtos.subjects.EmbeddedSubjectDto;
 import com.wora.itlens.models.dtos.surveyEditions.EmbeddedSurveyEditionsDto;
 import com.wora.itlens.models.entites.Answer;
 import com.wora.itlens.models.entites.Question;
-import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.models.enumes.QuestionType;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -171,4 +171,25 @@ class AnswerResponseServiceTest {
         assertEquals(5, mockAnswer1.getSelectionCount());
         assertEquals(4, mockAnswer2.getSelectionCount());
     }
+
+
+
+    @Test
+    @DisplayName("getAnswerEntity() should throw EntityNotFoundException for invalid answer ID")
+    void getAnswerEntity_shouldThrowEntityNotFoundExceptionForInvalidAnswerId() {
+        long invalidAnswerId = 99L;
+        String invalidAnswerMessage = "Answer ID not found: " + invalidAnswerId;
+
+        when(answerService.getAnswerEntity(invalidAnswerId))
+                .thenThrow(new EntityNotFoundException(invalidAnswerMessage));
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            answerService.getAnswerEntity(invalidAnswerId);
+        });
+
+        assertEquals(invalidAnswerMessage, exception.getMessage());
+
+        verify(answerService).getAnswerEntity(invalidAnswerId);
+    }
+
 }
