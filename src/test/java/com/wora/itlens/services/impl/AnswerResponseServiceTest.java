@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -190,6 +191,20 @@ class AnswerResponseServiceTest {
         assertEquals(invalidAnswerMessage, exception.getMessage());
 
         verify(answerService).getAnswerEntity(invalidAnswerId);
+    }
+
+
+    @Test
+    @DisplayName("processMultipleQuestionsAndAnswers() should throw RuntimeException for null or empty input data")
+    void processMultipleQuestionsAndAnswers_shouldThrowExceptionForNullOrEmptyInputData() {
+        CreateMultipleAnswersAndMultipleResponsesDto nullDto = null;
+        CreateMultipleAnswersAndMultipleResponsesDto emptyDto = new CreateMultipleAnswersAndMultipleResponsesDto(new ArrayList<>(), new ArrayList<>());
+
+        assertThrows(RuntimeException.class, () -> answerResponseService.processMultipleQuestionsAndAnswers(nullDto));
+        assertThrows(RuntimeException.class, () -> answerResponseService.processMultipleQuestionsAndAnswers(emptyDto));
+
+        verify(questionService, never()).getQuestionEntity(anyLong());
+        verify(answerService, never()).getAnswerEntity(anyLong());
     }
 
 }

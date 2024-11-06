@@ -49,6 +49,9 @@ public class AnswerResponseService implements IAnswerResponseService {
 
     @Override
     public List<QuestionWithAnswersResponseDto> processMultipleQuestionsAndAnswers(CreateMultipleAnswersAndMultipleResponsesDto dto) {
+        if (dto == null || (dto.questions().isEmpty() && dto.answers().isEmpty())) {
+            throw new RuntimeException();
+        }
         List<QuestionWithAnswersResponseDto> responses = dto.questions().stream()
                 .map(questionDto -> {
                     Question question = questionService.getQuestionEntity(questionDto.id());
