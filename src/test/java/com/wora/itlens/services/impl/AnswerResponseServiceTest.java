@@ -245,5 +245,38 @@ class AnswerResponseServiceTest {
         });
     }
 
+    @Test
+    @DisplayName("saveUserAnswer() should correctly increment answerCount and selectionCount")
+    void saveUserAnswer_shouldIncrementAnswerCountAndSelectionCount() {
+        Long answerId = 1L;
+        Long questionId = 1L;
+
+        Answer answer = new Answer();
+        answer.setId(answerId);
+        answer.setSelectionCount(0);
+        Question question = new Question();
+        question.setId(questionId);
+        question.setAnswerCount(0);
+        answer.setQuestion(question);
+
+        EmbeddedAnswerDto answerDto = new EmbeddedAnswerDto(answerId, "YANSIN", 3);
+        EmbeddedQuestionDto questionDto = new EmbeddedQuestionDto(questionId, "KRADKOZ", 3, QuestionType.MULTIPLE_CHOICE);
+
+        when(answerService.getAnswerEntity(answerId)).thenReturn(answer);
+        when(questionService.getQuestionEntity(questionId)).thenReturn(question);
+        when(answerService.saveAnswerEntity(answer)).thenReturn(answer);
+        when(answerResponseMapper.toDto(any(Answer.class), any(Question.class))).thenReturn(new AnswerResponseDto(answerDto, questionDto));
+
+        AnswerResponseDto responseDto = answerResponseService.saveUserAnswer(answerId, questionId);
+
+        assertNotNull(responseDto);
+        assertEquals(1, answer.getQuestion().getAnswerCount());
+        assertEquals(1, answer.getSelectionCount());
+        verify(answerService).saveAnswerEntity(answer);
+        verify(answerResponseMapper).toDto(answer, question);
+    }
+
+
+
 
 }
