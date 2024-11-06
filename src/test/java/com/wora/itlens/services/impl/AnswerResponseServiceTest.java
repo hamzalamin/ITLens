@@ -1,11 +1,14 @@
 package com.wora.itlens.services.impl;
 
+import com.wora.itlens.exceptions.InvalidAnswerException;
 import com.wora.itlens.mappers.AnswerResponseMapper;
+import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
 import com.wora.itlens.models.dtos.answerResponses.CreateMultipleAnswersAndMultipleResponsesDto;
 import com.wora.itlens.models.dtos.answerResponses.CreateMultipleAnswersAndOneQuestionDto;
 import com.wora.itlens.models.dtos.answerResponses.QuestionWithAnswersResponseDto;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.EmbeddedAnswerDto;
+import com.wora.itlens.models.dtos.questions.EmbeddedQuestionDto;
 import com.wora.itlens.models.dtos.questions.QuestionsDto;
 import com.wora.itlens.models.dtos.subjects.EmbeddedSubjectDto;
 import com.wora.itlens.models.dtos.surveyEditions.EmbeddedSurveyEditionsDto;
@@ -206,5 +209,27 @@ class AnswerResponseServiceTest {
         verify(questionService, never()).getQuestionEntity(anyLong());
         verify(answerService, never()).getAnswerEntity(anyLong());
     }
+
+    @Test
+    @DisplayName("saveUserAnswer() should throw InvalidAnswerException for invalid answer or question IDs")
+    void saveUserAnswer_shouldThrowInvalidAnswerExceptionForInvalidIds() {
+        Long invalidAnswerId = 999L;
+        Long validQuestionId = 1L;
+
+        Answer answer = new Answer();
+        answer.setId(invalidAnswerId);
+        answer.setQuestion(null);
+
+        Question question = new Question();
+        question.setId(validQuestionId);
+
+        when(answerService.getAnswerEntity(invalidAnswerId)).thenReturn(answer);
+        when(questionService.getQuestionEntity(validQuestionId)).thenReturn(question);
+
+        assertThrows(InvalidAnswerException.class, () -> {
+            answerResponseService.saveUserAnswer(invalidAnswerId, validQuestionId);
+        });
+    }
+
 
 }
