@@ -39,6 +39,5 @@ public class Subject {
     private List<Subject> subSubjects;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-//    @NotNull
     private List<Question> questions;
 }
