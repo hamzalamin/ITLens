@@ -81,6 +81,7 @@ src/
 ├── main/
 │   ├── java/
 │   │   └── com.wora.itlens/
+│   │       ├── annotations/
 │   │       ├── config/
 │   │       ├── controllers/
 │   │       ├── exceptions/
@@ -91,6 +92,7 @@ src/
 │   │       │   └── enumes/
 │   │       ├── repositories/
 │   │       ├── services/
+│   │       ├── validation/
 │   │       └── ItLensApplication.java
 │   └── resources/
 │       ├── static/
