@@ -32,7 +32,7 @@ public class Question {
     @Column(name = "answer_count", nullable = false)
     private Integer answerCount = 0;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 

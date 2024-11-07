@@ -130,7 +130,7 @@ class AnswerResponseServiceTest {
                 1L,
                 LocalDate.now().plusDays(1),
                 LocalDate.now().plusDays(2),
-                LocalDate.now().plusDays(3)
+                2024
         );
 
         EmbeddedSubjectDto subjectDto = new EmbeddedSubjectDto(1L, "Subject Title", surveyEditionDto, List.of());

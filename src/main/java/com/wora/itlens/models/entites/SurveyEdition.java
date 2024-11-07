@@ -34,7 +34,7 @@ public class SurveyEdition {
     @NotNull
     @Positive
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private Integer date;
 
     @NotNull
     @ManyToOne

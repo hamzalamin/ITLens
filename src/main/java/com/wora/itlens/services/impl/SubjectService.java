@@ -41,7 +41,6 @@ public class SubjectService implements ISubjectService {
     }
 
 
-
     @Override
     public SubjectDto findById(Long id) {
         Subject parentSubject = subjectRepository.findById(id)

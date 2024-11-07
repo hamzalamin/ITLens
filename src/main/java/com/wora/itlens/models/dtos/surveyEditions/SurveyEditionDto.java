@@ -13,7 +13,7 @@ public record SurveyEditionDto(
         @NotNull @Positive Long id,
         @NotNull @Future LocalDate creationDate,
         @NotNull @Future LocalDate startDate,
-        @NotNull @Future LocalDate date,
+        @NotNull Integer date,
         EmbeddedSurveyDto survey,
         List<EmbeddedSubjectDto> subjects
 ) {

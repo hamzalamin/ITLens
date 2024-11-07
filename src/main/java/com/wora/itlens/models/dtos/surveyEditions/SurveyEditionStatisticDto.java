@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public record SurveyEditionStatisticDto(
         LocalDate creationDate,
         LocalDate startDate,
-        LocalDate date,
+        Integer date,
         int totalSubjects,
         int totalQuestions,
         int totalAnswers,

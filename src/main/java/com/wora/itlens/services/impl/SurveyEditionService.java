@@ -8,23 +8,22 @@ import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionStatisticDto;
 import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
-import com.wora.itlens.models.entites.Question;
 import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.models.entites.SurveyEdition;
 import com.wora.itlens.repositories.SubjectRepository;
 import com.wora.itlens.repositories.SurveyEditionRepository;
-import com.wora.itlens.services.interfaces.ISubjectService;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
 import com.wora.itlens.services.interfaces.ISurveyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SurveyEditionService implements ISurveyEditionService {
 
     private final SurveyEditionRepository surveyEditionRepository;
@@ -119,7 +118,7 @@ public class SurveyEditionService implements ISurveyEditionService {
 
         LocalDate creationDate = surveyEdition.getCreationDate();
         LocalDate startDate = surveyEdition.getStartDate();
-        LocalDate date = surveyEdition.getDate();
+        int date = surveyEdition.getDate();
 
         double percentageAnsweredQuestions = (double) totalAnswers / totalQuestions * 100;
         double percentageAnsweredSubjects = (double) totalSubjectsAnswered / totalSubjects * 100;

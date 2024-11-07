@@ -28,7 +28,7 @@ public class Subject {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "survey_edition_id" , nullable = true)
+    @JoinColumn(name = "survey_edition_id" , nullable = false)
     private SurveyEdition surveyEdition;
 
     @ManyToOne
@@ -39,6 +39,6 @@ public class Subject {
     private List<Subject> subSubjects;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    @NotNull
+//    @NotNull
     private List<Question> questions;
 }
