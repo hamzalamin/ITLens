@@ -60,4 +60,26 @@ public class AnswerResponseController {
                 .andExpect(jsonPath("$.question.answerCount").value(question.getAnswerCount() + 1));
 
     }
+
+    @Test
+    void testSaveUserAnswer_InvalidAnswer() throws Exception{
+        Question question = new Question();
+        question.setText("Sample Question");
+        question.setAnswerCount(0);
+        questionRepository.save(question);
+
+        Answer answer = new Answer();
+        answer.setQuestion(question);
+        answer.setSelectionCount(0);
+        answerRepository.save(answer);
+
+        CreateAnswerResponseDto requestDto = new CreateAnswerResponseDto(answer.getId(), question.getId() + 999);
+        String requestJson = objectMapper.writeValueAsString(requestDto);
+        mockMvc.perform(post("/api/answers/response")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                        .andExpect(status().isBadRequest());
+
+    }
+
 }
