@@ -78,7 +78,7 @@ public class AnswerResponseController {
         mockMvc.perform(post("/api/answers/response")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                        .andExpect(status().isBadRequest());
+                        .andExpect(status().isNotFound());
 
     }
 
