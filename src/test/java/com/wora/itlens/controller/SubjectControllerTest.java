@@ -2,7 +2,6 @@ package com.wora.itlens.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wora.itlens.mappers.SubjectMapper;
 import com.wora.itlens.models.dtos.subjects.CreateSubjectDto;
 import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.repositories.SubjectRepository;
