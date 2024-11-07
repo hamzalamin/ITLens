@@ -86,4 +86,19 @@ public class SubjectControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void create_Fail_InvalidTitle() throws Exception {
+
+        CreateSubjectDto dto = new CreateSubjectDto("", 1L, 1L);
+
+        String requestJson = objectMapper.writeValueAsString(dto);
+
+        mockMvc.perform(post("/subjects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0]").value("must not be blank"));
+
+    }
 }
