@@ -1,6 +1,6 @@
 package com.wora.itlens.models.dtos.answerResponses;
 
-import com.wora.itlens.annotation.Exists;
+import com.wora.itlens.annotations.Exists;
 import com.wora.itlens.models.entites.Answer;
 import com.wora.itlens.models.entites.Question;
 import jakarta.validation.constraints.NotNull;

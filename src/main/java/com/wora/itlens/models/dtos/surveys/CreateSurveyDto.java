@@ -1,6 +1,6 @@
 package com.wora.itlens.models.dtos.surveys;
 
-import com.wora.itlens.annotation.Exists;
+import com.wora.itlens.annotations.Exists;
 import com.wora.itlens.models.entites.Owner;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

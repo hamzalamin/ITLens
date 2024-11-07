@@ -1,4 +1,4 @@
-package com.wora.itlens.annotation;
+package com.wora.itlens.annotations;
 
 import com.wora.itlens.validation.ExistsValidator;
 import jakarta.validation.Constraint;

@@ -1,6 +1,6 @@
 package com.wora.itlens.validation;
 
-import com.wora.itlens.annotation.Exists;
+import com.wora.itlens.annotations.Exists;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;

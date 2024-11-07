@@ -1,6 +1,6 @@
 package com.wora.itlens.models.dtos.questions;
 
-import com.wora.itlens.annotation.Exists;
+import com.wora.itlens.annotations.Exists;
 import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.models.enumes.QuestionType;
 import jakarta.validation.constraints.NotBlank;
