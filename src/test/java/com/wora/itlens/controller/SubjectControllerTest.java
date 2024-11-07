@@ -77,4 +77,13 @@ public class SubjectControllerTest {
                         .content(requestJson))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void getById_Fail_NotFound() throws Exception {
+        long nonExistentSubjectId = 999L;
+
+        mockMvc.perform(get("/subjects/{id}", nonExistentSubjectId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }
