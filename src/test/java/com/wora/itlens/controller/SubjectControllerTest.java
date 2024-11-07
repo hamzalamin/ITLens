@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -25,9 +27,6 @@ public class SubjectControllerTest {
 
     @Autowired
     private SubjectRepository subjectRepository;
-
-    @Autowired
-    private SubjectMapper subjectMapper;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -48,5 +47,22 @@ public class SubjectControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    void getById_Successfully() throws Exception{
+        Subject parentSubject = new Subject();
+        parentSubject.setTitle("Parent Subject");
+        parentSubject = subjectRepository.save(parentSubject);
 
+        Subject subject = new Subject();
+        subject.setTitle("Title Nooormal");
+        subject.setSubject(parentSubject);
+        subject = subjectRepository.save(subject);
+
+        mockMvc.perform(get("/subjects/{id}", subject.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(subject.getId()))
+                .andExpect(jsonPath("$.title").value(subject.getTitle()));
+
+    }
 }
