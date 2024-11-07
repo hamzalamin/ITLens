@@ -65,4 +65,16 @@ public class SubjectControllerTest {
                 .andExpect(jsonPath("$.title").value(subject.getTitle()));
 
     }
+
+
+    @Test
+    void create_fail() throws Exception {
+        CreateSubjectDto dto = new CreateSubjectDto("Title Nooormal", 1L, 999999L);
+        String requestJson = objectMapper.writeValueAsString(dto);
+
+        mockMvc.perform(post("/subjects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isNotFound());
+    }
 }
