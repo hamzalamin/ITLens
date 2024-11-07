@@ -62,6 +62,18 @@
 - `id`: Integer  
 - `name`: String
 
+# 💡 Custom @Exist Annotation
+
+The `@Exist` annotation is a custom validation annotation created to check whether a given entity exists in the database. This is particularly useful for validating foreign key relationships and ensuring data integrity before saving.
+
+## Usage:
+Simply annotate your DTO fields with `@Exist` to ensure that the related entity exists in the database.
+
+Example:
+```java
+@NotNull @Positive @Exist(entity = Owner.class) Long ownerId
+```
+
 ## 📁 Project Structure
 
 ```plaintext
@@ -88,3 +100,40 @@ src/
 └── test/
     └── java/
         └── com.wora.itlens/
+
+```
+# 🚀 How to Get Started
+
+### Prerequisites
+Before running the application, make sure you have the following installed:
+Java 17+
+Maven
+PostgreSQL database
+
+### Setup Instructions
+Clone the repository:
+```plaintext
+git clone https://github.com/hamzalamin/itLens/
+```
+
+Install the dependencies:
+```plaintext
+mvn install
+```
+
+Configure your database credentials:
+```plaintext
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
+spring.datasource.username=your_database_username
+spring.datasource.password=your_database_password
+```
+
+# API Documentation:
+You can explore the API documentation using Swagger at:
+http://localhost:8080/swagger-ui.html
+
+# Class Diagram:
+![Class Diagram](https://github.com/hamzalamin/ITLens/blob/main/src/main/java/com/wora/itlens/classesDiagramme/classes.png)
+
+
+
