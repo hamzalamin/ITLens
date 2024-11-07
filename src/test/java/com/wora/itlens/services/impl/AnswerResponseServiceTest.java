@@ -133,7 +133,7 @@ class AnswerResponseServiceTest {
                 LocalDate.now().plusDays(3)
         );
 
-        EmbeddedSubjectDto subjectDto = new EmbeddedSubjectDto(1L, "Subject Title", surveyEditionDto);
+        EmbeddedSubjectDto subjectDto = new EmbeddedSubjectDto(1L, "Subject Title", surveyEditionDto, List.of());
 
         List<AnswerDto> answerDtos = List.of(
                 new AnswerDto(1L, "Answer 1", 1),
@@ -260,7 +260,7 @@ class AnswerResponseServiceTest {
         answer.setQuestion(question);
 
         EmbeddedAnswerDto answerDto = new EmbeddedAnswerDto(answerId, "YANSIN", 3);
-        EmbeddedQuestionDto questionDto = new EmbeddedQuestionDto(questionId, "KRADKOZ", 3, QuestionType.MULTIPLE_CHOICE);
+        EmbeddedQuestionDto questionDto = new EmbeddedQuestionDto(questionId, "KRADKOZ", 3, QuestionType.MULTIPLE_CHOICE, List.of());
 
         when(answerService.getAnswerEntity(answerId)).thenReturn(answer);
         when(questionService.getQuestionEntity(questionId)).thenReturn(question);
