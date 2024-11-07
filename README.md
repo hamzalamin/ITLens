@@ -2,6 +2,7 @@
 
 **Survey IT** is a RESTful application built with **Spring Boot** that facilitates the creation, management, and participation in IT-focused surveys. The platform, **ITLens**, enables users to engage with structured surveys and view detailed statistical results of responses.
 
+
 ## 🚀 Features
 
 - **Survey Management**: Create and manage surveys with hierarchical structures (Chapters → Sub-Chapters → Questions).
@@ -22,7 +23,6 @@
 ## 🧳 Data Model
 
 ### Core Entities
-
 #### **Survey**  
 - `id`: Integer  
 - `title`: String  
@@ -66,7 +66,7 @@
 
 The `@Exist` annotation is a custom validation annotation created to check whether a given entity exists in the database. This is particularly useful for validating foreign key relationships and ensuring data integrity before saving.
 
-## Usage:
+### Usage:
 Simply annotate your DTO fields with `@Exist` to ensure that the related entity exists in the database.
 
 Example:
@@ -128,11 +128,11 @@ spring.datasource.username=your_database_username
 spring.datasource.password=your_database_password
 ```
 
-# API Documentation:
+# 🌐 API Documentation:
 You can explore the API documentation using Swagger at:
 http://localhost:8080/swagger-ui.html
 
-# Class Diagram:
+# 📐 Class Diagram:
 ![Class Diagram](https://github.com/hamzalamin/ITLens/blob/main/src/main/java/com/wora/itlens/classesDiagramme/classes.png)
 
 
