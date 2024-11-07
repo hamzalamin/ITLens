@@ -32,7 +32,7 @@ public class Subject {
     private SurveyEdition surveyEdition;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = false, columnDefinition = "integer default 0")
+    @JoinColumn(name = "subject_id", nullable = true, columnDefinition = "integer default 0")
     private Subject subject;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)

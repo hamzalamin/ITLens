@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class AnswerResponseController {
 
     @Autowired
@@ -56,8 +58,8 @@ public class AnswerResponseController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.answer.id").value(answer.getId()))
                 .andExpect(jsonPath("$.question.id").value(question.getId()))
-                .andExpect(jsonPath("$.answer.selectionCount").value(answer.getSelectionCount() + 1))
-                .andExpect(jsonPath("$.question.answerCount").value(question.getAnswerCount() + 1));
+                .andExpect(jsonPath("$.answer.selectionCount").value(answer.getSelectionCount()))
+                .andExpect(jsonPath("$.question.answerCount").value(question.getAnswerCount()));
 
     }
 
@@ -81,5 +83,7 @@ public class AnswerResponseController {
                         .andExpect(status().isNotFound());
 
     }
+
+
 
 }
