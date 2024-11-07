@@ -2,6 +2,7 @@ package com.wora.itlens.controllers;
 
 import com.wora.itlens.models.dtos.surveyEditions.CreateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionDto;
+import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionStatisticDto;
 import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
 import jakarta.validation.Valid;
@@ -46,5 +47,10 @@ public class SurveyEditionController {
     public ResponseEntity<Void> deleteSurveyEdition(@PathVariable Long id){
         surveyEditionService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/statistics/{surveyEditionId}")
+    public ResponseEntity<SurveyEditionStatisticDto> getStatistics(@PathVariable Long surveyEditionId){
+        return new ResponseEntity<>(surveyEditionService.getStatistics(surveyEditionId), HttpStatus.OK);
     }
 }

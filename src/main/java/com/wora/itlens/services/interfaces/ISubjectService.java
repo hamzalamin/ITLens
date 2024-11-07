@@ -6,6 +6,9 @@ import com.wora.itlens.models.dtos.subjects.UpdateSubjectDto;
 import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.services.GenericService;
 
+import java.util.List;
+
 public interface ISubjectService extends GenericService<CreateSubjectDto, UpdateSubjectDto, SubjectDto, Long> {
     Subject getSubjectEntity(Long id);
+    List<Subject> getSubjectsBySurveyEditionId(Long surveyEditionId);
 }

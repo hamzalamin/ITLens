@@ -5,15 +5,22 @@ import com.wora.itlens.mappers.SurveyEditionMapper;
 import com.wora.itlens.mappers.SurveyMapper;
 import com.wora.itlens.models.dtos.surveyEditions.CreateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionDto;
+import com.wora.itlens.models.dtos.surveyEditions.SurveyEditionStatisticDto;
 import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
+import com.wora.itlens.models.entites.Question;
+import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.models.entites.SurveyEdition;
+import com.wora.itlens.repositories.SubjectRepository;
 import com.wora.itlens.repositories.SurveyEditionRepository;
+import com.wora.itlens.services.interfaces.ISubjectService;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
 import com.wora.itlens.services.interfaces.ISurveyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,6 +31,7 @@ public class SurveyEditionService implements ISurveyEditionService {
     private final ISurveyService surveyService;
     private final SurveyEditionMapper surveyEditionMapper;
     private final SurveyMapper surveyMapper;
+    private final SubjectRepository subjectService;
 
     @Override
     public SurveyEditionDto save(CreateSurveyEditionDto createSurveyEditionDto) {
@@ -82,6 +90,57 @@ public class SurveyEditionService implements ISurveyEditionService {
     public SurveyEdition getSurveyEditionEntity(Long id){
         return surveyEditionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+    }
+
+    @Override
+    public SurveyEditionStatisticDto getStatistics(Long id) {
+        SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+
+        List<Subject> subjects = getSubjectsBySurveyEditionId(id);
+
+        int totalSubjects = subjects.size();
+
+        int totalQuestions = subjects.stream()
+                .mapToInt(subject -> subject.getQuestions().size())
+                .sum();
+
+        int totalAnswers = subjects.stream()
+                .flatMap(subject -> subject.getQuestions().stream())
+                .filter(question -> question.getAnswers() != null)
+                .mapToInt(question -> question.getAnswers().size())
+                .sum();
+
+        int totalSubjectsAnswered = (int) subjects.stream()
+                .filter(subject -> subject.getQuestions().stream()
+                        .anyMatch(question -> question.getAnswers() != null && !question.getAnswers().isEmpty()))
+                .count();
+
+
+        LocalDate creationDate = surveyEdition.getCreationDate();
+        LocalDate startDate = surveyEdition.getStartDate();
+        LocalDate date = surveyEdition.getDate();
+
+        double percentageAnsweredQuestions = (double) totalAnswers / totalQuestions * 100;
+        double percentageAnsweredSubjects = (double) totalSubjectsAnswered / totalSubjects * 100;
+        double answersPerSubjectPercentage = (double) totalAnswers / (totalSubjects * totalQuestions) * 100;
+
+        return new SurveyEditionStatisticDto(
+                creationDate,
+                startDate,
+                date,
+                totalSubjects,
+                totalQuestions,
+                totalAnswers,
+                percentageAnsweredQuestions,
+                percentageAnsweredSubjects,
+                answersPerSubjectPercentage
+        );
+    }
+
+
+    public List<Subject> getSubjectsBySurveyEditionId(Long surveyEditionId){
+        return subjectService.findAllBySurveyEditionId(surveyEditionId);
     }
 
 }

@@ -6,8 +6,11 @@ public record SurveyEditionStatisticDto(
         LocalDate creationDate,
         LocalDate startDate,
         LocalDate date,
-        int totalParticipantCount,
-        int totalQuestionCount,
-        int totalAnswerCount
+        int totalSubjects,
+        int totalQuestions,
+        int totalAnswers,
+        double percentageAnsweredQuestions,
+        double percentageAnsweredSubjects,
+        double answersPerSubjectPercentage
 ) {
 }
