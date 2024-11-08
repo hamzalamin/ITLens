@@ -1,6 +1,7 @@
 package com.wora.itlens.services.impl;
 
 import com.wora.itlens.exceptions.EntityNotFoundException;
+import com.wora.itlens.exceptions.InvalidSurveyDatesException;
 import com.wora.itlens.mappers.SurveyEditionMapper;
 import com.wora.itlens.mappers.SurveyMapper;
 import com.wora.itlens.models.dtos.surveyEditions.CreateSurveyEditionDto;
@@ -40,6 +41,11 @@ public class SurveyEditionService implements ISurveyEditionService {
             throw new EntityNotFoundException("Survey", surveyId);
         }
         SurveyEdition surveyEdition = surveyEditionMapper.toEntity(createSurveyEditionDto);
+        surveyEdition.setCreationDate(createSurveyEditionDto.creationDate());
+        surveyEdition.setStartDate(createSurveyEditionDto.startDate());
+        if (surveyEdition.getStartDate().isBefore(surveyEdition.getCreationDate())) {
+            throw new InvalidSurveyDatesException("Start date cannot be before the creation date.");
+        }
         surveyEdition.setSurvey(surveyMapper.toEntity(survey));
         SurveyEdition savedSE = surveyEditionRepository.save(surveyEdition);
         return surveyEditionMapper.toDto(savedSE);
