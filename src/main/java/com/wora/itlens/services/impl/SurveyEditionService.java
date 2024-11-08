@@ -71,6 +71,9 @@ public class SurveyEditionService implements ISurveyEditionService {
         surveyEdition.setCreationDate(updateSurveyEditionDto.creationDate());
         surveyEdition.setStartDate(updateSurveyEditionDto.startDate());
         surveyEdition.setDate(updateSurveyEditionDto.date());
+        if (surveyEdition.getStartDate().isBefore(surveyEdition.getCreationDate())) {
+            throw new InvalidSurveyDatesException("Start date cannot be before the creation date.");
+        }
         surveyEdition.setSurvey(surveyMapper.toEntity(survey));
         SurveyEdition updatedSurveyEd = surveyEditionRepository.save(surveyEdition);
         return surveyEditionMapper.toDto(updatedSurveyEd);
