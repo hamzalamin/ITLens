@@ -11,9 +11,9 @@ import com.wora.itlens.models.dtos.surveyEditions.UpdateSurveyEditionDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
 import com.wora.itlens.models.entites.Subject;
 import com.wora.itlens.models.entites.SurveyEdition;
-import com.wora.itlens.repositories.SubjectRepository;
 import com.wora.itlens.repositories.SurveyEditionRepository;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
+import com.wora.itlens.services.interfaces.ISurveyEditionSubjectService;
 import com.wora.itlens.services.interfaces.ISurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class SurveyEditionService implements ISurveyEditionService {
     private final ISurveyService surveyService;
     private final SurveyEditionMapper surveyEditionMapper;
     private final SurveyMapper surveyMapper;
-    private final SubjectRepository subjectService;
+    private final ISurveyEditionSubjectService surveyEditionSubjectService;
 
     @Override
     public SurveyEditionDto save(CreateSurveyEditionDto createSurveyEditionDto) {
@@ -105,7 +105,7 @@ public class SurveyEditionService implements ISurveyEditionService {
         SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
 
-        List<Subject> subjects = getSubjectsBySurveyEditionId(id);
+        List<Subject> subjects = surveyEditionSubjectService.getListsSubjectsBySurveyEditionId(id);
 
         int totalSubjects = subjects.size();
 
@@ -146,9 +146,5 @@ public class SurveyEditionService implements ISurveyEditionService {
         );
     }
 
-
-    public List<Subject> getSubjectsBySurveyEditionId(Long surveyEditionId){
-        return subjectService.findAllBySurveyEditionId(surveyEditionId);
-    }
 
 }
