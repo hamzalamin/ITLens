@@ -7,7 +7,6 @@ import com.wora.itlens.models.dtos.owners.OwnerDto;
 import com.wora.itlens.models.dtos.surveys.CreateSurveyDto;
 import com.wora.itlens.models.dtos.surveys.SurveyDto;
 import com.wora.itlens.models.dtos.surveys.UpdateSurveyDto;
-import com.wora.itlens.models.entites.Owner;
 import com.wora.itlens.models.entites.Survey;
 import com.wora.itlens.repositories.SurveyRepository;
 import com.wora.itlens.services.interfaces.IOwnerService;

@@ -1,8 +1,6 @@
 package com.wora.itlens.controllers;
 
 
-import com.wora.itlens.models.dtos.answerResponses.AnswerResponseDto;
-import com.wora.itlens.models.dtos.answerResponses.CreateAnswerResponseDto;
 import com.wora.itlens.models.dtos.answers.AnswerDto;
 import com.wora.itlens.models.dtos.answers.CreateAnswerDto;
 import com.wora.itlens.models.dtos.answers.UpdateAnswerDto;

@@ -11,7 +11,6 @@ import com.wora.itlens.repositories.SubjectRepository;
 import com.wora.itlens.services.interfaces.ISubjectService;
 import com.wora.itlens.services.interfaces.ISurveyEditionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
