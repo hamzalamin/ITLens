@@ -139,3 +139,6 @@ http://localhost:8080/swagger-ui.html
 
 
 
+# Contributors
+- [Hamza Lamin](https://github.com/hamzalamin)
+- [Aymane El Maini](https://github.com/aymaneTech)
