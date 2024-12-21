@@ -6,29 +6,33 @@ pipeline {
     }
 
     stages {
-        stage('checkout') {
+        stage('Checkout') {
             steps {
                 git 'https://github.com/hamzalamin/ITLens'
             }
+        }
+
+        stage('Build and Test') {
             steps {
-                sh './maven clean package'
-            }
-            steps {
-                sh './maven test'
+                sh './mvnw clean package'
+                sh './mvnw test'
             }
         }
+
         stage('Code Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh './maven sonar:sonar'
+                    sh './mvnw sonar:sonar'
                 }
             }
         }
+
         stage('Docker Build') {
             steps {
                 sh 'docker push $DOCKER_IMAGE'
             }
         }
+
         stage('Deploy') {
             steps {
                 sh 'docker-compose up -d'
