@@ -1,11 +1,9 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'Java 22'
-    }
     environment {
-        DOCKER_IMAGE = 'https://hub.docker.com/repository/docker/hamzalamin/itlens/'
+        DOCKER_IMAGE = 'hamzalamin/itlens'
+        DOCKER_TAG = 'latest'
     }
 
     stages {
@@ -17,29 +15,43 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                sh 'chmod +x ./mvnw'
-                sh './mvnw clean package -DskipTests'
-
-            }
-        }
-
-        stage('Code Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh './mvnw sonar:sonar'
+                script {
+                    docker.image('maven:3.9-eclipse-temurin-22').inside('-v $PWD:/app') {
+                        sh 'chmod +x ./mvnw'
+                        sh './mvnw clean package -DskipTests'
+                    }
                 }
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh 'docker push $DOCKER_IMAGE'
+                script {
+                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    echo "DEBUG: Starting Push Docker Image stage..."
+                }
+                withDockerRegistry([credentialsId: '564cabb3-1e39-4375-b2aa-227561939a94', url: '']) {
+                    sh 'docker info'
+                    sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                }
+                script {
+                    echo "DEBUG: Docker Image pushed successfully!"
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker-compose up -d'
+                script {
+                    echo 'yeees'
+                }
             }
         }
     }
