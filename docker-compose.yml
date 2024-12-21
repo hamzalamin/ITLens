@@ -1,0 +1,47 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: itLensApk
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:1414/prod_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - db
+    networks:
+      - network-data
+
+  db:
+    image: postgres:alpine
+    ports:
+      - "1414:1414"
+    command: [ "postgres", "-p", "1414" ]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_MULTIPLE_DATABASES: prod_db, test_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - /home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  db-data:
+
+networks:
+  network-data:
+    driver: bridge

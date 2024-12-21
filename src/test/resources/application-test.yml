@@ -1,6 +1,10 @@
 # Test Database Configuration
-spring.datasource.url=jdbc:postgresql://localhost:5432/integration-tests-itlens
-spring.datasource.username=postgres
-spring.datasource.password=123
-spring.jpa.hibernate.ddl-auto=create
-spring.jpa.show-sql=true
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:1414/test_db
+        username: postgres
+        password: 123
+    jpa:
+        hibernate:
+            ddl-auto: create
+            show-sql: true

@@ -1,20 +1,8 @@
-FROM maven:3.8 AS build
+FROM openjdk:22-jdk
 
 WORKDIR /app
 
-COPY pom.xml .
-
-RUN mvn dependency:go-offline
-
-COPY src ./src
-
-RUN mvn clean package -DskipTests
-
-FROM openjdk:21-jdk AS run
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar /app/app.jar
+COPY ./target/*.jar /app/app.jar
 
 EXPOSE 8000
 
