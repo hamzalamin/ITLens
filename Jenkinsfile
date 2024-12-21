@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'Java 22'
+    }
     environment {
         DOCKER_IMAGE = 'https://hub.docker.com/repository/docker/hamzalamin/itlens/'
     }
