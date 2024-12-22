@@ -18,7 +18,7 @@ pipeline {
                 script {
                     docker.image('maven:3.9-eclipse-temurin-22').inside('-v $PWD:/app') {
                         sh 'chmod +x ./mvnw'
-                        sh './mvnw clean package -X'
+                        sh './mvnw clean package -DskipTests'
                     }
                 }
             }
