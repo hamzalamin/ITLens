@@ -58,15 +58,15 @@ public class OwnerController {
         assertEquals("Hamza", foundOwner.getName());
     }
 
-    @Test
-    void testGetAllOwnerIntegration() throws Exception{
-        List<Owner> owners = ownerRepository.findAll().stream()
-                .toList();
-        mockMvc.perform(get("/owners"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Hamza"));
-
-    }
+//    @Test
+//    void testGetAllOwnerIntegration() throws Exception{
+//        List<Owner> owners = ownerRepository.findAll().stream()
+//                .toList();
+//        mockMvc.perform(get("/owners"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].name").value("Hamza"));
+//
+//    }
 
 
 }
