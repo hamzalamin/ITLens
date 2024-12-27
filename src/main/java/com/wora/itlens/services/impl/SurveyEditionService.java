@@ -55,6 +55,8 @@ public class SurveyEditionService implements ISurveyEditionService {
     public SurveyEditionDto findById(Long id) {
         SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
+
+        surveyEdition.setSubjects(filterSubjects(surveyEdition));
         return surveyEditionMapper.toDto(surveyEdition);
     }
 
@@ -82,6 +84,9 @@ public class SurveyEditionService implements ISurveyEditionService {
     @Override
     public List<SurveyEditionDto> findAll() {
         List<SurveyEditionDto> surveyDtoList = surveyEditionRepository.findAll().stream()
+                .peek(surveyEdition -> {
+                    surveyEdition.setSubjects(filterSubjects(surveyEdition));
+                })
                 .map(surveyEditionMapper::toDto)
                 .toList();
         return surveyDtoList;
@@ -95,7 +100,7 @@ public class SurveyEditionService implements ISurveyEditionService {
     }
 
     @Override
-    public SurveyEdition getSurveyEditionEntity(Long id){
+    public SurveyEdition getSurveyEditionEntity(Long id) {
         return surveyEditionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Survey Edition", id));
     }
@@ -146,5 +151,9 @@ public class SurveyEditionService implements ISurveyEditionService {
         );
     }
 
-
+    private List<Subject> filterSubjects(SurveyEdition surveyEdition) {
+        return surveyEdition.getSubjects().stream()
+                .filter(Subject::isParentSubject)
+                .toList();
+    }
 }

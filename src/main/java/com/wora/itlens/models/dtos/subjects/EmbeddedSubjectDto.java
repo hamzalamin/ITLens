@@ -12,8 +12,9 @@ import java.util.List;
 public record EmbeddedSubjectDto(
         @NotNull @Positive Long id,
         @NotBlank String title,
-        EmbeddedSurveyEditionsDto surveyEdition,
-        List<EmbeddedQuestionDto> questions
+//        EmbeddedSurveyEditionsDto surveyEdition,
+        List<EmbeddedQuestionDto> questions,
+        List<EmbeddedSubjectDto> subSubjects
 
 ) {
 }

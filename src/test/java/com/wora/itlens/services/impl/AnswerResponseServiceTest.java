@@ -133,7 +133,7 @@ class AnswerResponseServiceTest {
                 2024
         );
 
-        EmbeddedSubjectDto subjectDto = new EmbeddedSubjectDto(1L, "Subject Title", surveyEditionDto, List.of());
+        EmbeddedSubjectDto subjectDto = new EmbeddedSubjectDto(1L, "Subject Title", List.of(), List.of());
 
         List<AnswerDto> answerDtos = List.of(
                 new AnswerDto(1L, "Answer 1", 1),

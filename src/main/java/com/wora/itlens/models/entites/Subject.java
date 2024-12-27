@@ -40,4 +40,8 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<Question> questions;
+
+    public boolean isParentSubject(){
+        return subject == null;
+    }
 }

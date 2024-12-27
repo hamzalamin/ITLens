@@ -13,6 +13,7 @@ public record SubjectDto(
         @NotBlank String title,
         EmbeddedSurveyEditionsDto surveyEdition,
         EmbeddedSubjectDto subject,
-        List<EmbeddedQuestionDto> questions
+        List<EmbeddedQuestionDto> questions,
+        List<SubjectDto> subSubjects
 ) {
 }
